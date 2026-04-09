@@ -5,6 +5,9 @@
     <title>OYAK HORSE | ENVIRONMENTAL DASHBOARD</title>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-database-compat.js"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
@@ -1342,25 +1345,25 @@
         updateKpiColors();
     </script>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+    <script>
         const firebaseConfig = {
-            apiKey: "AIzaSyB_bYaGi9WjQoN_TbDc7UZygKDrzMYU0jM",
-            authDomain: "horse-cevre-dashboard.firebaseapp.com",
-            projectId: "horse-cevre-dashboard",
-            storageBucket: "horse-cevre-dashboard.firebasestorage.app",
-            messagingSenderId: "859607408879",
-            appId: "1:859607408879:web:1f8e068725ca63c78ebb1a"
+          apiKey: "AIzaSyB_bYaGi9WjQoN_TbDc7UZygKDrzMYU0jM",
+          authDomain: "horse-cevre-dashboard.firebaseapp.com",
+          databaseURL: "https://horse-cevre-dashboard-default-rtdb.firebaseio.com",
+          projectId: "horse-cevre-dashboard",
+          storageBucket: "horse-cevre-dashboard.firebasestorage.app",
+          messagingSenderId: "859607408879",
+          appId: "1:859607408879:web:1f8e068725ca63c78ebb1a"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const DOC_ID = "cevre_dashboard_verisi";
+        // Initialize Firebase Compat
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const DOC_PATH = "environmental_data_v1";
 
         async function cloudSave() {
             const btn = document.getElementById('downloadBtn');
+            const originalClass = btn.className;
             btn.className = "fa-solid fa-spinner fa-spin action-icon";
 
             const data = {
@@ -1380,22 +1383,23 @@
                 if (el.id) data.texts[el.id] = el.innerText;
             });
 
-            try {
-                await setDoc(doc(db, "veriler", DOC_ID), data);
-                alert("Veriler Buluta Kaydedildi.");
-            } catch (e) {
-                console.error("Kayıt hatası:", e);
-                alert("Kayıt sırasında hata oluştu.");
-            } finally {
-                btn.className = "fa-solid fa-cloud-arrow-up action-icon";
-            }
+            db.ref(DOC_PATH).set(data)
+                .then(() => {
+                    alert("Veriler Buluta Kaydedildi.");
+                })
+                .catch((error) => {
+                    console.error("Kayıt hatası:", error);
+                    alert("Kayıt sırasında hata oluştu: " + error.message);
+                })
+                .finally(() => {
+                    btn.className = originalClass;
+                });
         }
 
         async function cloudLoad() {
-            try {
-                const docSnap = await getDoc(doc(db, "veriler", DOC_ID));
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
+            db.ref(DOC_PATH).once('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
                     
                     if (data.texts) {
                         Object.keys(data.texts).forEach(id => {
@@ -1405,22 +1409,20 @@
                     }
 
                     if (data.charts) {
-                        cevreChart.data.datasets[0].data = data.charts.cevre;
-                        legalChart.data.datasets.forEach((ds, i) => ds.data = data.charts.legal[i]);
-                        nonconfPieChart.data.datasets[0].data = data.charts.nonconf;
-                        dangChart.data.datasets.forEach((ds, i) => ds.data = data.charts.dang[i]);
-                        pkgChart.data.datasets.forEach((ds, i) => ds.data = data.charts.pkg[i]);
-                        liquidChart.data.datasets.forEach((ds, i) => ds.data = data.charts.liquid[i]);
-                        waterChart.data.datasets.forEach((ds, i) => ds.data = data.charts.water[i]);
+                        if(data.charts.cevre) cevreChart.data.datasets[0].data = data.charts.cevre;
+                        if(data.charts.legal) legalChart.data.datasets.forEach((ds, i) => ds.data = data.charts.legal[i]);
+                        if(data.charts.nonconf) nonconfPieChart.data.datasets[0].data = data.charts.nonconf;
+                        if(data.charts.dang) dangChart.data.datasets.forEach((ds, i) => ds.data = data.charts.dang[i]);
+                        if(data.charts.pkg) pkgChart.data.datasets.forEach((ds, i) => ds.data = data.charts.pkg[i]);
+                        if(data.charts.liquid) liquidChart.data.datasets.forEach((ds, i) => ds.data = data.charts.liquid[i]);
+                        if(data.charts.water) waterChart.data.datasets.forEach((ds, i) => ds.data = data.charts.water[i]);
                         
                         [cevreChart, legalChart, nonconfPieChart, dangChart, pkgChart, liquidChart, waterChart].forEach(c => c.update());
                     }
                     updateAtikBar();
                     updateKpiColors();
                 }
-            } catch (e) {
-                console.error("Yükleme hatası:", e);
-            }
+            });
         }
 
         document.getElementById('downloadBtn').addEventListener('click', cloudSave);

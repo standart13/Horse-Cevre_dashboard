@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="tr" style="--vurgu-color: #000000; --text-muted: #000000;"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OYAK HORSE | ENVIRONMENTAL DASHBOARD</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --card-border-width: 1px;
+            --card-border-radius: 12px;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --vurgu-color: #004279;
+            --icon-color: #059669;
+            --accent-green: #059669;
+            --accent-yellow: #d97706;
+            --accent-red: #dc2626;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 12px 24px;
+            color: var(--text-main);
+            transition: background-color 0.2s ease, color 0.2s ease;
+            height: 100vh;
+            overflow: hidden; 
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        [contenteditable="true"]:hover, [contenteditable="true"]:focus {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            cursor: text;
+            outline: 1px dashed var(--vurgu-color);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+            outline: none;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header .date {
+            font-size: 14px;
+            color: var(--vurgu-color);
+            font-weight: 700;
+            background: #e0e7ff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .action-icon {
+            font-size: 20px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .action-icon:hover {
+            color: var(--vurgu-color);
+        }
+
+        .dashboard-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+            min-height: 0;
+        }
+
+        .top-section {
+            display: grid;
+            grid-template-columns: 1.35fr 0.85fr 0.9fr 1.4fr; 
+            gap: 12px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .legal-card-wrapper {
+            flex-grow: 1;
+            display: flex;
+            min-height: 0;
+        }
+
+        .water-plan-wrapper {
+            flex-shrink: 0;
+            display: flex;
+        }
+
+        .bottom-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            height: 38%; 
+            flex-shrink: 0;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: var(--card-border-width) solid var(--border-color);
+            border-radius: var(--card-border-radius);
+            padding: 10px 12px; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-width 0.1s, outline 0.1s;
+            cursor: pointer;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+            pointer-events: none;
+            flex-shrink: 0;
+            justify-content: space-between;
+        }
+
+        .card-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-icon {
+            color: var(--icon-color);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 24px;
+            transition: color 0.2s;
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            outline: none;
+            pointer-events: auto;
+            line-height: 1.1;
+        }
+
+        .card-content-area {
+            pointer-events: none;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 0;
+        }
+
+        .metric-large {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1;
+            letter-spacing: -0.5px;
+            display: inline-block;
+            outline: none;
+            pointer-events: auto;
+        }
+
+        .metric-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            font-weight: 500;
+            outline: none;
+            pointer-events: auto;
+        }
+
+        .progress-bar-bg {
+            background-color: var(--border-color);
+            height: 6px;
+            border-radius: 3px;
+            margin-top: 6px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            background-color: var(--accent-green);
+            transition: width 0.4s ease;
+        }
+
+        .chart-wrapper-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 100%;
+            width: 60px; 
+            pointer-events: auto;
+            flex-shrink: 0;
+        }
+        
+        .chart-container-large {
+            position: relative;
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            pointer-events: auto;
+            margin-top: 4px;
+        }
+
+        .chart-container-large canvas, .chart-container canvas, #nonconfPieChart {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2px;
+            pointer-events: auto;
+            flex-wrap: wrap;
+        }
+        
+        .info-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            outline: none;
+        }
+        
+        .info-val {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .sub-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2px;
+            outline: none;
+            pointer-events: auto;
+        }
+
+        .fraction-val {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .fraction-current {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-main);
+            outline: none;
+            pointer-events: auto;
+        }
+
+        .fraction-divider {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .fraction-total {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-muted);
+            outline: none;
+            pointer-events: auto;
+        }
+
+        .kpi-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            pointer-events: auto;
+        }
+        .kpi-table th, .kpi-table td {
+            border-bottom: 1px solid var(--border-color);
+            padding: 3px 4px;
+            text-align: center;
+            outline: none;
+            white-space: nowrap;
+        }
+        .kpi-table th {
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+        .kpi-table td {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .kpi-table tr:last-child td { border-bottom: none; }
+        .kpi-table .text-left { text-align: left; }
+        
+        .status-ok { color: var(--accent-green); font-weight: 800; }
+        .status-nok { color: var(--accent-red); font-weight: 800; }
+        .status-plan { color: var(--accent-yellow); font-weight: 800; }
+
+        .water-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            pointer-events: auto;
+        }
+        .water-table th, .water-table td {
+            padding: 2px 4px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            outline: none;
+        }
+        .water-table th {
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 10px;
+            background-color: rgba(0,0,0,0.02);
+        }
+        .water-table td { font-weight: 600; color: var(--text-main); }
+        .water-table tr:last-child td { border-bottom: none; }
+
+        .floating-input {
+            position: absolute;
+            width: 40px;
+            padding: 4px;
+            display: none;
+            z-index: 1050;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-weight: bold;
+            color: var(--text-main);
+            text-align: center;
+            font-size: 12px;
+            outline: none;
+        }
+
+        #colorTool {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 24px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            width: 280px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .tool-header {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--vurgu-color);
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tool-section-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-muted);
+            margin: 14px 0 10px 0;
+            text-transform: uppercase;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tool-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .tool-item-label {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        input[type="color"] {
+            border: 1px solid #cbd5e1;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            padding: 0;
+            background: none;
+            flex-shrink: 0;
+        }
+
+        input[type="number"] {
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 13px;
+            outline: none;
+            width: 48px;
+            padding: 4px;
+        }
+
+        .reset-btn, .save-btn {
+            padding: 8px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .reset-btn {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: var(--text-main);
+        }
+        .reset-btn:hover { background: #e2e8f0; }
+
+        .save-btn {
+            background: var(--accent-green);
+            border: none;
+            color: #ffffff;
+            margin-top: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #loadingOverlay {
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(255,255,255,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-weight: 800;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loadingOverlay">VERİLER YÜKLENİYOR...</div>
+
+    <div class="header">
+        <div class="header-left">
+            <div class="brand-logo" contenteditable="true" id="db_mainTitle">OYAK HORSE | ENVIRONMENT DASHBOARD</div>
+        </div>
+        <div class="header-right">
+            <i class="fa-solid fa-cloud-arrow-up action-icon" id="downloadBtn" title="Buluta Kaydet"></i>
+            <i class="fas fa-cog action-icon" id="settingsBtn" title="Renk ve Görünüm Ayarları"></i>
+            <div class="date" contenteditable="true" id="db_mainDate">26 MART 2026</div>
+        </div>
+    </div>
+
+    <input type="text" id="floatingInput" class="floating-input" value="" style="display: none;">
+
+    <div id="colorTool" style="display: none;">
+        <div class="tool-header">
+            DASHBOARD AYARLARI
+            <i class="fas fa-times" id="closeTool" style="cursor:pointer; color: var(--text-muted);"></i>
+        </div>
+        <div class="tool-section-title">GENEL AYARLAR</div>
+        <div class="tool-item"><span class="tool-item-label">Sayfa Arka Planı:</span> <input type="color" id="bgColorPicker" value="#f1f5f9"></div>
+        <div class="tool-item"><span class="tool-item-label">Genel Ana Metin Rengi:</span> <input type="color" id="textMainPicker" value="#000000"></div>
+        <div class="tool-item"><span class="tool-item-label">Genel Silik Metin Rengi:</span> <input type="color" id="textMutedGlobalPicker" value="#000000"></div>
+        <div class="tool-item"><span class="tool-item-label">Tema/Vurgu Rengi:</span> <input type="color" id="accentColorPicker" value="#000000"></div>
+        <div>
+            <button class="reset-btn" id="resetSelectionBtn">Seçimi Temizle</button>
+            <button class="save-btn" id="saveBtn"><i class="fa-solid fa-check"></i> Ayar Menüsünü Kapat</button>
+        </div>
+    </div>
+
+    <div class="dashboard-layout">
+        <div class="top-section">
+            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+                <div style="display: flex; gap: 12px; flex-shrink: 0;">
+                    <div class="card card-egitim" style="flex: 1 1 0%; outline: none;">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <div class="card-icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+                                <div class="card-title" contenteditable="true" id="titleEgitim">ÇEVRE EĞİTİMLERİ</div>
+                            </div>
+                        </div>
+                        <div class="card-content-area">
+                            <div class="chart-wrapper-row">
+                                <div style="pointer-events: auto;">
+                                    <div class="metric-large" id="cevreScore" contenteditable="true">88%</div>
+                                    <div class="metric-sub" contenteditable="true" id="cevreLabel">Tamamlanma Oranı</div>
+                                </div>
+                                <div class="chart-container"><canvas id="cevreEgitimChart"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-denetim" style="flex: 1 1 0%; outline: none;">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <div class="card-icon"><i class="fa-solid fa-trash-can-arrow-up"></i></div>
+                                <div class="card-title" contenteditable="true" id="titleDenetim">GÖRSEL ATIK KABI DENETİMLERİ</div>
+                            </div>
+                        </div>
+                        <div class="card-content-area">
+                            <div>
+                                <div class="fraction-val">
+                                    <span class="fraction-current" id="atikCurrent" contenteditable="true">12</span>
+                                    <span class="fraction-divider">/</span>
+                                    <span class="fraction-total" id="atikTotal" contenteditable="true">15</span>
+                                </div>
+                                <div class="metric-sub" contenteditable="true" id="atikLabel">Tamamlanan Denetimler</div>
+                                <div class="progress-bar-bg">
+                                    <div id="atikBar" class="progress-bar-fill" style="width: 80%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-kpi" style="flex-grow: 1; min-height: 0px; outline: none;">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <div class="card-icon"><i class="fa-solid fa-table-list"></i></div>
+                            <div class="card-title" contenteditable="true" id="titleKpi">AYLIK ÇEVRE KPI ÖZETİ ŞUBAT</div>
+                        </div>
+                    </div>
+                    <div class="card-content-area" style="justify-content: flex-start; align-items: stretch;">
+                        <table class="kpi-table" style="height: 100%;">
+                            <thead>
+                                <tr>
+                                    <th contenteditable="true" class="text-left" style="width: 30%;">Kategori</th>
+                                    <th contenteditable="true" class="text-left" style="width: 50%;">KPI</th>
+                                    <th contenteditable="true" style="width: 20%; text-align: center;">Gerçekleşen / Hedef</th>
+                                </tr>
+                            </thead>
+                            <tbody id="kpiTableBody">
+                                <tr><td contenteditable="true" class="text-left" id="kpiKat1">⚡ Enerji</td><td contenteditable="true" class="text-left" id="kpiMet1">Elektrik Tüketimi</td><td contenteditable="true" class="kpi-ratio" id="kpiDur1">100/86</td></tr>
+                                <tr><td contenteditable="true" class="text-left" id="kpiKat2">🔥 Enerji</td><td contenteditable="true" class="text-left" id="kpiMet2">Doğalgaz Tüketimi</td><td contenteditable="true" class="kpi-ratio" id="kpiDur2">43/45</td></tr>
+                                <tr><td contenteditable="true" class="text-left" id="kpiKat3">💧 Su</td><td contenteditable="true" class="text-left" id="kpiMet3">Su Tüketimi</td><td contenteditable="true" class="kpi-ratio" id="kpiDur3">0.1/0.13</td></tr>
+                                <tr><td contenteditable="true" class="text-left" id="kpiKat4">🌍 Emisyon</td><td contenteditable="true" class="text-left" id="kpiMet4">Sera Gazı</td><td contenteditable="true" class="kpi-ratio" id="kpiDur4">9/9</td></tr>
+                                <tr><td contenteditable="true" class="text-left" id="kpiKat5">♻ Atık</td><td contenteditable="true" class="text-left" id="kpiMet5">Ambalaj Atığı</td><td contenteditable="true" class="kpi-ratio" id="kpiDur5">2.41/1.95</td></tr>
+                                <tr><td contenteditable="true" class="text-left" id="kpiKat6">☠ Atık</td><td contenteditable="true" class="text-left" id="kpiMet6">Tehlikeli Atık</td><td contenteditable="true" class="kpi-ratio" id="kpiDur6">1.8/1.12</td></tr>
+                                <tr><td contenteditable="true" class="text-left" id="kpiKat7">🛢 End. Sıvı</td><td contenteditable="true" class="text-left" id="kpiMet7">End. Sıvı Tüketimi</td><td contenteditable="true" class="kpi-ratio" id="kpiDur7">0.63/0.73</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+                <div class="card card-dogal" style="flex-shrink: 0; outline: none;">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <div class="card-icon"><i class="fa-solid fa-leaf"></i></div>
+                            <div class="card-title" contenteditable="true" id="titleDogal">Yönetim sistemi PERFORMANS DEĞERLENDİRMESİ</div>
+                        </div>
+                    </div>
+                    <div class="card-content-area" style="justify-content: center; padding-top: 4px;">
+                        <div id="dogalScore" contenteditable="true" style="font-size: 16px; font-weight: 800; color: var(--text-main);"><br></div>
+                        <div class="metric-sub" id="dogalLabel" contenteditable="true"><div><br></div></div>
+                    </div>
+                </div>
+
+                <div class="card card-nonconf" style="flex-grow: 1; outline: none;">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <div class="card-title" contenteditable="true" id="titleNonconf">NON-CONFORMITIES AND CORRECTIVE ACTIONS</div>
+                        </div>
+                    </div>
+                    <div class="card-content-area" style="padding-top: 4px; display: flex; flex-direction: column; height: 100%; min-height: 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; flex-shrink: 0; padding: 0 4px; pointer-events: auto;">
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Top: <span id="ncTotal" contenteditable="true">143</span></div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Açık: <span id="ncOpen" contenteditable="true" style="color: var(--accent-red);">43</span></div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Kapatıldı: <span id="ncClosed" contenteditable="true" style="color: var(--accent-green);">100</span></div>
+                        </div>
+                        <div style="flex-grow: 1; position: relative; min-height: 0; width: 100%; pointer-events: auto;">
+                            <canvas id="nonconfPieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+                <div class="card card-tatbikat" style="flex-grow: 1; min-height: 0px; outline: none;">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <div class="card-icon"><i class="fa-solid fa-person-running"></i></div>
+                            <div class="card-title" contenteditable="true" id="titleTatbikat">ÇEVRE TATBİKATLARI</div>
+                        </div>
+                    </div>
+                    <div class="card-content-area" style="flex-direction: row; gap: 12px; align-items: stretch; height: 100%;">
+                        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0;">
+                            <div class="sub-section-title" contenteditable="true" id="tatbikatTip1">KİMYASAL DÖKÜLME TATBİKATLARI</div>
+                            <div class="info-row"><span class="info-label">Planlanan:</span><span class="info-val" id="tatbikatKimPlan" contenteditable="true">4 ADET</span></div>
+                            <div class="info-row"><span class="info-label">Gerçekleşen:</span><span class="info-val" id="tatbikatKimGerc" contenteditable="true" style="color: var(--accent-green);">3 ADET</span></div>
+                            <div class="sub-section-title" contenteditable="true" style="margin-top: 8px;" id="tatbikatTip2">ADR TATBİKATLARI</div>
+                            <div class="info-row"><span class="info-label">Planlanan:</span><span class="info-val" id="tatbikatAdrPlan" contenteditable="true">2 ADET</span></div>
+                            <div class="info-row"><span class="info-label">Gerçekleşen:</span><span class="info-val" id="tatbikatAdrGerc" contenteditable="true" style="color: var(--accent-green);">2 ADET</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-remark" style="flex-shrink: 0; outline: none;">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <div class="card-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                            <div class="card-title" contenteditable="true" id="titleRemark">DENETİM REMARK SAYILARI</div>
+                        </div>
+                    </div>
+                    <div class="card-content-area" style="justify-content: flex-start;">
+                        <table class="kpi-table">
+                            <thead><tr><th class="text-left">Denetim Tipi</th><th>Hafta</th><th>Rmk</th></tr></thead>
+                            <tbody>
+                                <tr><td contenteditable="true" class="text-left" id="rmkTip1">DQS</td><td contenteditable="true" id="rmkHaf1">2</td><td contenteditable="true" id="rmkSay1">0</td></tr>
+                                <tr><td contenteditable="true" class="text-left" id="rmkTip2">Horse Global</td><td contenteditable="true" id="rmkHaf2">20</td><td contenteditable="true" id="rmkSay2">0</td></tr>
+                                <tr><td contenteditable="true" class="text-left" id="rmkTip3">Bureau Veritas</td><td contenteditable="true" id="rmkHaf3">27</td><td contenteditable="true" id="rmkSay3">0</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+                <div class="legal-card-wrapper">
+                    <div class="card" style="width: 100%; outline: none;">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                                <div class="card-title" contenteditable="true" id="titleLegal">LEGAL &amp; COMPLIANCE</div>
+                            </div>
+                        </div>
+                        <div class="card-content-area" id="legalContainer">
+                            <div class="chart-container-large"><canvas id="legalChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="water-plan-wrapper">
+                    <div class="card" style="width: 100%; outline: none;">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <div class="card-icon"><i class="fa-solid fa-droplet"></i></div>
+                                <div class="card-title" contenteditable="true" id="titleWaterAction">WATER ACTION PLAN</div>
+                            </div>
+                        </div>
+                        <div class="card-content-area">
+                            <table class="water-table">
+                                <thead><tr><th>Aksiyon</th><th>Hedef</th><th>Gerçek.</th><th>Durum</th></tr></thead>
+                                <tbody>
+                                    <tr><td contenteditable="true" id="wAks1">Kaçak Giderimi</td><td contenteditable="true" id="wHed1">1000</td><td contenteditable="true" id="wGer1">850</td><td contenteditable="true" id="wDur1">DEVAM</td></tr>
+                                    <tr><td contenteditable="true" id="wAks2">Yağmur Hasadı</td><td contenteditable="true" id="wHed2">0</td><td contenteditable="true" id="wGer2">0</td><td contenteditable="true" id="wDur2">PLAN</td></tr>
+                                    <tr><td contenteditable="true" id="wAks3">Sayaç Opt.</td><td contenteditable="true" id="wHed3">-</td><td contenteditable="true" id="wGer3">-</td><td contenteditable="true" id="wDur3">OK</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-section">
+            <div class="card"><div class="card-header"><div class="card-title" contenteditable="true" id="tDng">DANG. WASTES</div></div><div class="card-content-area" id="dangContainer"><div class="chart-container-large"><canvas id="dangChart"></canvas></div></div></div>
+            <div class="card"><div class="card-header"><div class="card-title" contenteditable="true" id="tPkg">PKG WASTES</div></div><div class="card-content-area" id="pkgContainer"><div class="chart-container-large"><canvas id="pkgChart"></canvas></div></div></div>
+            <div class="card"><div class="card-header"><div class="card-title" contenteditable="true" id="tLiq">IND. LIQUID</div></div><div class="card-content-area" id="liquidContainer"><div class="chart-container-large"><canvas id="liquidChart"></canvas></div></div></div>
+            <div class="card"><div class="card-header"><div class="card-title" contenteditable="true" id="tWat">WATER CONS.</div></div><div class="card-content-area" id="waterContainer"><div class="chart-container-large"><canvas id="waterChart"></canvas></div></div></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB_bYaGi9WjQoN_TbDc7UZygKDrzMYU0jM",
+            authDomain: "horse-cevre-dashboard.firebaseapp.com",
+            projectId: "horse-cevre-dashboard",
+            storageBucket: "horse-cevre-dashboard.firebasestorage.app",
+            messagingSenderId: "859607408879",
+            appId: "1:859607408879:web:1f8e068725ca63c78ebb1a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const DOC_ID = "cevre_data_v1";
+
+        // Grafik Değişkenleri
+        let cevreChart, legalChart, nonconfPieChart, dangChart, liquidChart, pkgChart, waterChart;
+        const root = document.querySelector(':root');
+
+        // Sayfa Yüklendiğinde
+        window.addEventListener('load', async () => {
+            await loadFromFirebase();
+            document.getElementById('loadingOverlay').style.display = 'none';
+        });
+
+        async function loadFromFirebase() {
+            try {
+                const docRef = doc(db, "dashboards", DOC_ID);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    // Metinleri Yükle
+                    Object.keys(data.texts || {}).forEach(id => {
+                        const el = document.getElementById(id);
+                        if(el) el.innerText = data.texts[id];
+                    });
+                    // Renkleri Yükle
+                    Object.keys(data.colors || {}).forEach(prop => {
+                        root.style.setProperty(prop, data.colors[prop]);
+                    });
+                    initCharts(data.charts || {});
+                } else {
+                    initCharts({});
+                }
+            } catch (e) {
+                console.error("Yükleme hatası:", e);
+                initCharts({});
+            }
+        }
+
+        async function saveToFirebase() {
+            const btn = document.getElementById('downloadBtn');
+            btn.className = "fa-solid fa-spinner fa-spin action-icon";
+
+            const payload = {
+                texts: {},
+                colors: {
+                    "--bg-color": getComputedStyle(root).getPropertyValue('--bg-color').trim(),
+                    "--text-main": getComputedStyle(root).getPropertyValue('--text-main').trim(),
+                    "--text-muted": getComputedStyle(root).getPropertyValue('--text-muted').trim(),
+                    "--vurgu-color": getComputedStyle(root).getPropertyValue('--vurgu-color').trim()
+                },
+                charts: {
+                    cevre: cevreChart.data.datasets[0].data,
+                    legal: legalChart.data.datasets.map(d => d.data),
+                    nonconf: nonconfPieChart.data.datasets[0].data,
+                    dang: dangChart.data.datasets.map(d => d.data),
+                    pkg: pkgChart.data.datasets.map(d => d.data),
+                    liq: liquidChart.data.datasets.map(d => d.data),
+                    wat: waterChart.data.datasets.map(d => d.data)
+                }
+            };
+
+            // Tüm contenteditable alanları tara
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+                if(el.id) payload.texts[el.id] = el.innerText;
+            });
+
+            try {
+                await setDoc(doc(db, "dashboards", DOC_ID), payload);
+                alert("Veriler Buluta Kaydedildi!");
+            } catch (e) {
+                alert("Hata oluştu: " + e.message);
+            } finally {
+                btn.className = "fa-solid fa-cloud-arrow-up action-icon";
+            }
+        }
+
+        document.getElementById('downloadBtn').addEventListener('click', saveToFirebase);
+
+        function initCharts(saved) {
+            Chart.defaults.font.family = "'Poppins'";
+            
+            // Çevre Eğitim
+            cevreChart = new Chart(document.getElementById('cevreEgitimChart'), {
+                type: 'doughnut',
+                data: { datasets: [{ data: saved.cevre || [88, 12], backgroundColor: ['#059669', '#e2e8f0'], borderWidth: 0 }] },
+                options: { cutout: '70%', plugins: { legend: {display:false} }, animation: false }
+            });
+
+            // Legal
+            legalChart = new Chart(document.getElementById('legalChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['J','F','M','A','M','J','J','A','S','O','N','D'],
+                    datasets: [
+                        { label:'Reel', data: saved.legal ? saved.legal[0] : [91,91,0,0,0,0,0,0,0,0,0,0], backgroundColor:'#0f172a' },
+                        { label:'Budget', type:'line', data: saved.legal ? saved.legal[1] : [100,100,100,100,100,100,100,100,100,100,100,100], borderColor:'#059669', borderDash:[3,3] }
+                    ]
+                },
+                options: { responsive:true, maintainAspectRatio:false, animation:false }
+            });
+
+            // Nonconf
+            nonconfPieChart = new Chart(document.getElementById('nonconfPieChart'), {
+                type: 'pie',
+                data: { datasets: [{ data: saved.nonconf || [16, 5, 18, 8, 2, 14, 17], backgroundColor: ['#5b9bd5', '#ed7d31', '#a5a5a5', '#ffc000', '#4472c4', '#70ad47', '#264478'] }] },
+                options: { responsive:true, maintainAspectRatio:false, animation:false }
+            });
+
+            // Combo Charts
+            function makeCombo(id, data) {
+                return new Chart(document.getElementById(id), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Y25','J','F','M','A','M','J','J','A','S','O','N','D'],
+                        datasets: [
+                            { label:'Real', data: data ? data[0] : [1,0,0,0,0,0,0,0,0,0,0,0,0], backgroundColor:'#0f172a' },
+                            { label:'Target', data: data ? data[1] : [null,2,1.5,null,null,null,null,null,null,null,null,null,null], backgroundColor:'#cbd5e1' },
+                            { label:'Budget', type:'line', data: data ? data[2] : [null,1,1,1,1,1,1,1,1,1,1,1,1], borderColor:'#059669', borderDash:[3,3] }
+                        ]
+                    },
+                    options: { responsive:true, maintainAspectRatio:false, animation:false }
+                });
+            }
+
+            dangChart = makeCombo('dangChart', saved.dang);
+            pkgChart = makeCombo('pkgChart', saved.pkg);
+            liquidChart = makeCombo('liquidChart', saved.liq);
+            waterChart = makeCombo('waterChart', saved.wat);
+
+            setupChartInputs();
+        }
+
+        function setupChartInputs() {
+            const fInput = document.getElementById('floatingInput');
+            let activeChart, dsIdx, dtIdx;
+
+            const attach = (chart) => {
+                chart.canvas.onclick = (e) => {
+                    const points = chart.getElementsAtEventForMode(e, 'nearest', {intersect:true}, true);
+                    if(points.length) {
+                        activeChart = chart;
+                        dsIdx = points[0].datasetIndex;
+                        dtIdx = points[0].index;
+                        fInput.style.display = 'block';
+                        fInput.style.left = e.pageX + 'px';
+                        fInput.style.top = e.pageY + 'px';
+                        fInput.value = chart.data.datasets[dsIdx].data[dtIdx] || '';
+                        fInput.focus();
+                    }
+                };
+            };
+
+            [legalChart, dangChart, pkgChart, liquidChart, waterChart].forEach(attach);
+
+            fInput.onblur = () => {
+                if(activeChart) {
+                    activeChart.data.datasets[dsIdx].data[dtIdx] = parseFloat(fInput.value) || 0;
+                    activeChart.update();
+                }
+                fInput.style.display = 'none';
+            };
+        }
+
+        // Renk Ayarları
+        document.getElementById('settingsBtn').onclick = () => document.getElementById('colorTool').style.display='block';
+        document.getElementById('closeTool').onclick = () => document.getElementById('colorTool').style.display='none';
+        document.getElementById('saveBtn').onclick = () => document.getElementById('colorTool').style.display='none';
+
+        document.getElementById('bgColorPicker').oninput = (e) => root.style.setProperty('--bg-color', e.target.value);
+        document.getElementById('textMainPicker').oninput = (e) => root.style.setProperty('--text-main', e.target.value);
+        document.getElementById('accentColorPicker').oninput = (e) => root.style.setProperty('--vurgu-color', e.target.value);
+    </script>
+</body></html>

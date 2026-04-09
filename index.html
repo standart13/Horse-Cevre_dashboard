@@ -494,32 +494,20 @@
             align-items: center;
             gap: 8px;
         }
-
-        #loadingOverlay {
-            position: fixed;
-            top:0; left:0; width:100%; height:100%;
-            background: rgba(255,255,255,0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            font-weight: 800;
-            font-size: 20px;
-        }
     </style>
+    
+    <script id="saved-state">window.__SAVED_CHART_DATA__ = {"cevreScore":[88,12],"legalChart":[[91.4,91.4,0,0,0,0,0,0,0,0,0,0],[100,100,100,100,100,100,100,100,100,100,100,100]],"nonconfPieChart":[16,5,18,8,2,14,17],"dangChart":[[1.04,0,0,0,0,0,0,0,0,0,0,0,0],[null,2.7,1.8,null,null,null,null,null,null,null,null,null,null],[null,1.12,1.01,0.97,0.85,0.87,0.79,0.87,1.01,0.99,0.99,1.06,1.11]],"pkgChart":[[2.85,0,0,0,0,0,0,0,0,0,0,0,0],[null,1.95,2.41,null,null,null,null,null,null,null,null,null,null],[null,1.75,2.01,1.95,1.95,2.01,1.91,1.84,1.85,1.84,1.8,1.77,1.81]],"liquidChart":[[0.57,0,0,0,0,0,0,0,0,0,0,0,0],[null,0.62,0.63,null,null,null,null,null,null,null,null,null,null],[null,0.74,0.73,0.73,0.73,0.72,0.71,0.71,0.78,0.69,0.78,0.78,0.76]],"waterChart":[[0.14,0,0,0,0,0,0,0,0,0,0,0,0],[null,0.13,null,null,null,null,null,null,null,null,null,null,null],[null,0.13,0.11,0.13,0.16,0.17,0.18,0.26,0.64,0.18,0.15,0.14,0.15]]};</script>
 </head>
 <body>
 
-    <div id="loadingOverlay">VERİLER YÜKLENİYOR...</div>
-
     <div class="header">
         <div class="header-left">
-            <div class="brand-logo" contenteditable="true" id="db_mainTitle">OYAK HORSE | ENVIRONMENT DASHBOARD</div>
+            <div class="brand-logo" contenteditable="true" id="main_logo">OYAK HORSE | ENVIRONMENT DASHBOARD</div>
         </div>
         <div class="header-right">
             <i class="fa-solid fa-cloud-arrow-up action-icon" id="downloadBtn" title="Buluta Kaydet"></i>
             <i class="fas fa-cog action-icon" id="settingsBtn" title="Renk ve Görünüm Ayarları"></i>
-            <div class="date" contenteditable="true" id="db_mainDate">26 MART 2026</div>
+            <div class="date" contenteditable="true" id="main_date">26 MART 2026</div>
         </div>
     </div>
 
@@ -530,11 +518,25 @@
             DASHBOARD AYARLARI
             <i class="fas fa-times" id="closeTool" style="cursor:pointer; color: var(--text-muted);"></i>
         </div>
+        
         <div class="tool-section-title">GENEL AYARLAR</div>
         <div class="tool-item"><span class="tool-item-label">Sayfa Arka Planı:</span> <input type="color" id="bgColorPicker" value="#f1f5f9"></div>
         <div class="tool-item"><span class="tool-item-label">Genel Ana Metin Rengi:</span> <input type="color" id="textMainPicker" value="#000000"></div>
         <div class="tool-item"><span class="tool-item-label">Genel Silik Metin Rengi:</span> <input type="color" id="textMutedGlobalPicker" value="#000000"></div>
         <div class="tool-item"><span class="tool-item-label">Tema/Vurgu Rengi:</span> <input type="color" id="accentColorPicker" value="#000000"></div>
+        
+        <div class="tool-section-title">
+            KART AYARLARI 
+            <span id="selectedCardLabel" style="color: var(--vurgu-color); text-transform: none; font-weight: 600; margin-left: auto;">Tümü</span>
+        </div>
+        <div class="tool-item"><span class="tool-item-label">Kart Arka Planı:</span> <input type="color" id="cardBgPicker" value="#ffffff"></div>
+        <div class="tool-item"><span class="tool-item-label">Kart Ana Metin Rengi:</span> <input type="color" id="cardTextMainPicker" value="#0f172a"></div>
+        <div class="tool-item"><span class="tool-item-label">Kart Silik Metin Rengi:</span> <input type="color" id="cardTextMutedPicker" value="#000000"></div>
+        <div class="tool-item"><span class="tool-item-label">İkon Rengi:</span> <input type="color" id="iconColorPicker" value="#059669"></div>
+        <div class="tool-item"><span class="tool-item-label">Kenarlık Rengi:</span> <input type="color" id="borderColorPicker" value="#e2e8f0"></div>
+        <div class="tool-item"><span class="tool-item-label">Kenarlık Kalınlığı (px):</span> <input type="number" id="borderWidthPicker" value="1" min="0" max="15"></div>
+        <div class="tool-item"><span class="tool-item-label">Kenarlık Ovalliği (px):</span> <input type="number" id="borderRadiusPicker" value="12" min="0" max="50"></div>
+        
         <div>
             <button class="reset-btn" id="resetSelectionBtn">Seçimi Temizle</button>
             <button class="save-btn" id="saveBtn"><i class="fa-solid fa-check"></i> Ayar Menüsünü Kapat</button>
@@ -602,14 +604,42 @@
                                     <th contenteditable="true" style="width: 20%; text-align: center;">Gerçekleşen / Hedef</th>
                                 </tr>
                             </thead>
-                            <tbody id="kpiTableBody">
-                                <tr><td contenteditable="true" class="text-left" id="kpiKat1">⚡ Enerji</td><td contenteditable="true" class="text-left" id="kpiMet1">Elektrik Tüketimi</td><td contenteditable="true" class="kpi-ratio" id="kpiDur1">100/86</td></tr>
-                                <tr><td contenteditable="true" class="text-left" id="kpiKat2">🔥 Enerji</td><td contenteditable="true" class="text-left" id="kpiMet2">Doğalgaz Tüketimi</td><td contenteditable="true" class="kpi-ratio" id="kpiDur2">43/45</td></tr>
-                                <tr><td contenteditable="true" class="text-left" id="kpiKat3">💧 Su</td><td contenteditable="true" class="text-left" id="kpiMet3">Su Tüketimi</td><td contenteditable="true" class="kpi-ratio" id="kpiDur3">0.1/0.13</td></tr>
-                                <tr><td contenteditable="true" class="text-left" id="kpiKat4">🌍 Emisyon</td><td contenteditable="true" class="text-left" id="kpiMet4">Sera Gazı</td><td contenteditable="true" class="kpi-ratio" id="kpiDur4">9/9</td></tr>
-                                <tr><td contenteditable="true" class="text-left" id="kpiKat5">♻ Atık</td><td contenteditable="true" class="text-left" id="kpiMet5">Ambalaj Atığı</td><td contenteditable="true" class="kpi-ratio" id="kpiDur5">2.41/1.95</td></tr>
-                                <tr><td contenteditable="true" class="text-left" id="kpiKat6">☠ Atık</td><td contenteditable="true" class="text-left" id="kpiMet6">Tehlikeli Atık</td><td contenteditable="true" class="kpi-ratio" id="kpiDur6">1.8/1.12</td></tr>
-                                <tr><td contenteditable="true" class="text-left" id="kpiKat7">🛢 End. Sıvı</td><td contenteditable="true" class="text-left" id="kpiMet7">End. Sıvı Tüketimi</td><td contenteditable="true" class="kpi-ratio" id="kpiDur7">0.63/0.73</td></tr>
+                            <tbody>
+                                <tr>
+                                    <td contenteditable="true" class="text-left" id="kpiKat1">⚡ Enerji</td>
+                                    <td contenteditable="true" class="text-left" id="kpiMet1">Elektrik Tüketimi</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum1">100/86</td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" class="text-left" id="kpiKat2">🔥 Enerji</td>
+                                    <td contenteditable="true" class="text-left" id="kpiMet2">Doğalgaz Tüketimi</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum2">43/45</td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" class="text-left" id="kpiKat3">💧 Su</td>
+                                    <td contenteditable="true" class="text-left" id="kpiMet3">Su Tüketimi</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum3">0.1/0.13</td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" class="text-left" id="kpiKat4">🌍 Emisyon</td>
+                                    <td contenteditable="true" class="text-left" id="kpiMet4">Sera Gazı</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum4">9/9</td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" class="text-left" id="kpiKat5">♻ Atık</td>
+                                    <td contenteditable="true" class="text-left" id="kpiMet5">Ambalaj Atığı</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum5">2.41/1.95</td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" class="text-left" id="kpiKat6">☠ Atık</td>
+                                    <td contenteditable="true" class="text-left" id="kpiMet6">Tehlikeli Atık</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum6">1.8/1.12</td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" class="text-left" id="kpiKat7">🛢 End. Sıvı</td>
+                                    <td contenteditable="true" class="text-left" id="kpiMet7">End. Sıvı Tüketimi</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum7">0.63/0.73</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -617,6 +647,7 @@
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+                
                 <div class="card card-dogal" style="flex-shrink: 0; outline: none;">
                     <div class="card-header">
                         <div class="card-header-left">
@@ -661,11 +692,23 @@
                     <div class="card-content-area" style="flex-direction: row; gap: 12px; align-items: stretch; height: 100%;">
                         <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0;">
                             <div class="sub-section-title" contenteditable="true" id="tatbikatTip1">KİMYASAL DÖKÜLME TATBİKATLARI</div>
-                            <div class="info-row"><span class="info-label">Planlanan:</span><span class="info-val" id="tatbikatKimPlan" contenteditable="true">4 ADET</span></div>
-                            <div class="info-row"><span class="info-label">Gerçekleşen:</span><span class="info-val" id="tatbikatKimGerc" contenteditable="true" style="color: var(--accent-green);">3 ADET</span></div>
+                            <div class="info-row">
+                                <span class="info-label" contenteditable="true">Planlanan:</span>
+                                <span class="info-val" id="tatbikatKimPlan" contenteditable="true">4 ADET</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label" contenteditable="true">Gerçekleşen:</span>
+                                <span class="info-val" id="tatbikatKimGerc" contenteditable="true" style="color: var(--accent-green);">3 ADET</span>
+                            </div>
                             <div class="sub-section-title" contenteditable="true" style="margin-top: 8px;" id="tatbikatTip2">ADR TATBİKATLARI</div>
-                            <div class="info-row"><span class="info-label">Planlanan:</span><span class="info-val" id="tatbikatAdrPlan" contenteditable="true">2 ADET</span></div>
-                            <div class="info-row"><span class="info-label">Gerçekleşen:</span><span class="info-val" id="tatbikatAdrGerc" contenteditable="true" style="color: var(--accent-green);">2 ADET</span></div>
+                            <div class="info-row">
+                                <span class="info-label" contenteditable="true">Planlanan:</span>
+                                <span class="info-val" id="tatbikatAdrPlan" contenteditable="true">2 ADET</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label" contenteditable="true">Gerçekleşen:</span>
+                                <span class="info-val" id="tatbikatAdrGerc" contenteditable="true" style="color: var(--accent-green);">2 ADET</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -679,11 +722,29 @@
                     </div>
                     <div class="card-content-area" style="justify-content: flex-start;">
                         <table class="kpi-table">
-                            <thead><tr><th class="text-left">Denetim Tipi</th><th>Hafta</th><th>Rmk</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th contenteditable="true" class="text-left" style="width: 50%;">Denetim Tipi</th>
+                                    <th contenteditable="true" style="width: 25%; text-align: center;">Hafta</th>
+                                    <th contenteditable="true" style="width: 25%; text-align: center;">Rmk</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr><td contenteditable="true" class="text-left" id="rmkTip1">DQS</td><td contenteditable="true" id="rmkHaf1">2</td><td contenteditable="true" id="rmkSay1">0</td></tr>
-                                <tr><td contenteditable="true" class="text-left" id="rmkTip2">Horse Global</td><td contenteditable="true" id="rmkHaf2">20</td><td contenteditable="true" id="rmkSay2">0</td></tr>
-                                <tr><td contenteditable="true" class="text-left" id="rmkTip3">Bureau Veritas</td><td contenteditable="true" id="rmkHaf3">27</td><td contenteditable="true" id="rmkSay3">0</td></tr>
+                                <tr>
+                                    <td contenteditable="true" class="text-left" id="rmkTip1">DQS</td>
+                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta1">2</td>
+                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi1">«0»</td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" class="text-left" id="rmkTip2">Horse Global Evaluation</td>
+                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta2">20</td>
+                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi2">«0»</td>
+                                </tr>
+                                <tr>
+                                    <td contenteditable="true" class="text-left" id="rmkTip3">Bureau Veritas</td>
+                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta3">27</td>
+                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi3">«0»</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -696,11 +757,13 @@
                         <div class="card-header">
                             <div class="card-header-left">
                                 <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
-                                <div class="card-title" contenteditable="true" id="titleLegal">LEGAL &amp; COMPLIANCE</div>
+                                <div class="card-title" contenteditable="true" id="titleLegal">LEGAL &amp; REGULATORY ENVIRONMENTAL COMPLIANCE</div>
                             </div>
                         </div>
                         <div class="card-content-area" id="legalContainer">
-                            <div class="chart-container-large"><canvas id="legalChart"></canvas></div>
+                            <div class="chart-container-large" style="margin-top: 0;">
+                                <canvas id="legalChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -713,28 +776,571 @@
                                 <div class="card-title" contenteditable="true" id="titleWaterAction">WATER ACTION PLAN</div>
                             </div>
                         </div>
-                        <div class="card-content-area">
+                        <div class="card-content-area" style="justify-content: flex-start;">
                             <table class="water-table">
-                                <thead><tr><th>Aksiyon</th><th>Hedef</th><th>Gerçek.</th><th>Durum</th></tr></thead>
+                                <thead>
+                                    <tr>
+                                        <th contenteditable="true" style="width: 50%;">Aksiyon</th>
+                                        <th contenteditable="true" style="width: 15%; text-align: center;">Hedef m3/Yıl</th>
+                                        <th contenteditable="true" style="width: 15%; text-align: center;">Gerçek.</th>
+                                        <th contenteditable="true" style="width: 20%; text-align: center;">Durum</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                    <tr><td contenteditable="true" id="wAks1">Kaçak Giderimi</td><td contenteditable="true" id="wHed1">1000</td><td contenteditable="true" id="wGer1">850</td><td contenteditable="true" id="wDur1">DEVAM</td></tr>
-                                    <tr><td contenteditable="true" id="wAks2">Yağmur Hasadı</td><td contenteditable="true" id="wHed2">0</td><td contenteditable="true" id="wGer2">0</td><td contenteditable="true" id="wDur2">PLAN</td></tr>
-                                    <tr><td contenteditable="true" id="wAks3">Sayaç Opt.</td><td contenteditable="true" id="wHed3">-</td><td contenteditable="true" id="wGer3">-</td><td contenteditable="true" id="wDur3">OK</td></tr>
+                                    <tr>
+                                        <td contenteditable="true" id="waterAks1">Kaçak Giderimi Dijital Takip</td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterHed1">1000</td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterGer1">850</td>
+                                        <td contenteditable="true" id="waterDur1" style="color:var(--vurgu-color); font-weight:800; text-align: center; font-size: 11px;">DEVAM EDİYOR</td>
+                                    </tr>
+                                    <tr>
+                                        <td contenteditable="true" id="waterAks2">Yağmur Hasadı Tankı Kurulumu</td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterHed2"><br></td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterGer2">0</td>
+                                        <td contenteditable="true" id="waterDur2" class="status-plan" style="text-align: center; font-size: 11px;">PLANLANDI</td>
+                                    </tr>
+                                    <tr>
+                                        <td contenteditable="true" id="waterAks3">Departman Sayaç Optimizasyonu</td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterHed3">-</td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterGer3">-</td>
+                                        <td contenteditable="true" id="waterDur3" class="status-ok" style="text-align: center; font-size: 11px;">PLANLANDI</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="bottom-section">
-            <div class="card"><div class="card-header"><div class="card-title" contenteditable="true" id="tDng">DANG. WASTES</div></div><div class="card-content-area" id="dangContainer"><div class="chart-container-large"><canvas id="dangChart"></canvas></div></div></div>
-            <div class="card"><div class="card-header"><div class="card-title" contenteditable="true" id="tPkg">PKG WASTES</div></div><div class="card-content-area" id="pkgContainer"><div class="chart-container-large"><canvas id="pkgChart"></canvas></div></div></div>
-            <div class="card"><div class="card-header"><div class="card-title" contenteditable="true" id="tLiq">IND. LIQUID</div></div><div class="card-content-area" id="liquidContainer"><div class="chart-container-large"><canvas id="liquidChart"></canvas></div></div></div>
-            <div class="card"><div class="card-header"><div class="card-title" contenteditable="true" id="tWat">WATER CONS.</div></div><div class="card-content-area" id="waterContainer"><div class="chart-container-large"><canvas id="waterChart"></canvas></div></div></div>
+            
+            <div class="card" style="outline: none;">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <div class="card-title" contenteditable="true" id="titleDang">CUMUL DANG. WASTES (kg/TAJ)</div>
+                    </div>
+                </div>
+                <div class="card-content-area" id="dangContainer">
+                    <div class="chart-container-large" style="margin-top: 0;">
+                        <canvas id="dangChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="outline: none;">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <div class="card-title" contenteditable="true" id="titlePkg">PKG WASTES (kg/Act.h)</div>
+                    </div>
+                </div>
+                <div class="card-content-area" id="pkgContainer">
+                    <div class="chart-container-large" style="margin-top: 0;">
+                        <canvas id="pkgChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="outline: none;">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <div class="card-title" contenteditable="true" id="titleLiquid">IND. LIQUID CONS. (L/act.h)</div>
+                    </div>
+                </div>
+                <div class="card-content-area" id="liquidContainer">
+                    <div class="chart-container-large" style="margin-top: 0;">
+                        <canvas id="liquidChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="outline: none;">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <div class="card-title" contenteditable="true" id="titleWater">CUMUL WATER CONS. (m3/TAJ)</div>
+                    </div>
+                </div>
+                <div class="card-content-area" id="waterContainer">
+                    <div class="chart-container-large" style="margin-top: 0;">
+                        <canvas id="waterChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
         </div>
+
     </div>
+
+    <script>
+        // Kaydedilmiş veri kontrolü
+        const saved = window.__SAVED_CHART_DATA__ || {};
+
+        const settingsBtn = document.getElementById('settingsBtn');
+        const colorTool = document.getElementById('colorTool');
+        const closeTool = document.getElementById('closeTool');
+        const root = document.querySelector(':root');
+        const saveBtn = document.getElementById('saveBtn');
+
+        const cards = document.querySelectorAll('.card');
+        const selectedCardLabel = document.getElementById('selectedCardLabel');
+        const resetSelectionBtn = document.getElementById('resetSelectionBtn');
+
+        const bgColorPicker = document.getElementById('bgColorPicker');
+        const textMainPicker = document.getElementById('textMainPicker');
+        const textMutedGlobalPicker = document.getElementById('textMutedGlobalPicker');
+        const accentColorPicker = document.getElementById('accentColorPicker');
+
+        const cardBgPicker = document.getElementById('cardBgPicker');
+        const cardTextMainPicker = document.getElementById('cardTextMainPicker');
+        const cardTextMutedPicker = document.getElementById('cardTextMutedPicker');
+        const iconColorPicker = document.getElementById('iconColorPicker');
+        const borderColorPicker = document.getElementById('borderColorPicker');
+        const borderWidthPicker = document.getElementById('borderWidthPicker');
+        const borderRadiusPicker = document.getElementById('borderRadiusPicker');
+
+        let selectedCard = null;
+
+        const selectorsMainText = '.metric-large, td, .info-val, .fraction-current';
+        const selectorsMutedText = '.card-title, .metric-sub, th, .info-label, .fraction-divider, .fraction-total, .status-plan';
+
+        Chart.defaults.font.family = "'Poppins', sans-serif";
+        Chart.defaults.color = getComputedStyle(root).getPropertyValue('--text-muted').trim();
+
+        let cevreChart = new Chart(document.getElementById('cevreEgitimChart'), { 
+            type: 'doughnut', 
+            data: { datasets: [{ data: saved.cevreScore || [88, 12], backgroundColor: ['#059669', '#f1f5f9'], borderWidth: 0 }] }, 
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                animation: { duration: 0 },
+                layout: { padding: 0 }
+            } 
+        });
+
+        document.getElementById('cevreScore').addEventListener('input', function() {
+            let val = parseFloat(this.innerText.replace('%', '').replace(',', '.')) || 0;
+            if (val > 100) val = 100;
+            if (val < 0) val = 0;
+            cevreChart.data.datasets[0].data = [val, 100 - val];
+            cevreChart.update();
+        });
+
+        function updateAtikBar() {
+            let current = parseFloat(document.getElementById('atikCurrent').innerText) || 0;
+            let total = parseFloat(document.getElementById('atikTotal').innerText) || 1;
+            if (current > total) current = total;
+            if (current < 0) current = 0;
+            let percentage = (current / total) * 100;
+            document.getElementById('atikBar').style.width = percentage + '%';
+        }
+
+        document.getElementById('atikCurrent').addEventListener('input', updateAtikBar);
+        document.getElementById('atikTotal').addEventListener('input', updateAtikBar);
+
+        let legalChart = new Chart(document.getElementById('legalChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [
+                    {
+                        label: 'Reel (kg/act.hour)',
+                        data: saved.legalChart ? saved.legalChart[0] : [91.4, 91.4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        backgroundColor: '#0f172a',
+                        barPercentage: 0.5,
+                        order: 2,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Budget (kg/act.hour)',
+                        type: 'line',
+                        data: saved.legalChart ? saved.legalChart[1] : [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+                        borderColor: '#059669',
+                        borderDash: [3,3],
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        tension: 0,
+                        order: 1,
+                        yAxisID: 'yRight'
+                    }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { top: 16, right: 0, left: 0, bottom: 0 } },
+                plugins: {
+                    legend: { display: true, position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, font: {size: 11, family: "'Poppins', sans-serif", weight: '600'}, color: Chart.defaults.color, padding: 8 } },
+                    tooltip: { enabled: false }
+                },
+                scales: {
+                    y: { min: 0, max: 110, grid: { color: '#e2e8f0', drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'}, maxTicksLimit: 5 } },
+                    yRight: { min: 0, max: 110, position: 'right', grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'}, maxTicksLimit: 5 } },
+                    x: { grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'} } }
+                },
+                animation: { duration: 0 }
+            }
+        });
+
+        const customDataLabels = {
+            id: 'customDataLabels',
+            afterDatasetsDraw(chart, args, pluginOptions) {
+                if (chart.config.type === 'doughnut' || chart.config.type === 'pie') return;
+                const { ctx, data } = chart;
+                ctx.save();
+                
+                ctx.font = 'normal 10px Poppins'; 
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                
+                const mainTextColor = getComputedStyle(root).getPropertyValue('--text-main').trim();
+                const budgetColor = '#059669'; 
+                const nokColor = '#dc2626';     
+                
+                let budgetDatasetIndex = data.datasets.findIndex(ds => ds.label === 'MONTH BUDGET' || ds.label === 'Budget (kg/act.hour)');
+
+                data.datasets.forEach((dataset, i) => {
+                    const meta = chart.getDatasetMeta(i);
+
+                    if (!meta.hidden) {
+                        meta.data.forEach((element, index) => {
+                            const value = dataset.data[index];
+                            if (value !== null && value !== undefined && !isNaN(value) && value !== 0) {
+                                let displayVal = value.toString().replace('.', ',');
+                                
+                                if (dataset.label === 'MONTH BUDGET' || dataset.label === 'Budget (kg/act.hour)') {
+                                    ctx.fillStyle = budgetColor; 
+                                    ctx.fillText(displayVal, element.x, element.y - 3);
+                                } else if (dataset.label === '2025 RESULTS' || dataset.label === 'Reel (kg/act.hour)') {
+                                    let isNOK = false;
+                                    if (budgetDatasetIndex !== -1 && data.datasets[budgetDatasetIndex].data[index] !== null) {
+                                        const comparisonVal = data.datasets[budgetDatasetIndex].data[index];
+                                        if (value > comparisonVal) {
+                                            isNOK = true;
+                                        }
+                                    }
+                                    ctx.fillStyle = isNOK ? nokColor : mainTextColor;
+                                    ctx.fillText(displayVal, element.x, element.y - 3);
+                                } else {
+                                    ctx.fillStyle = mainTextColor;
+                                    ctx.fillText(displayVal, element.x, element.y - 3);
+                                }
+                            }
+                        });
+                    }
+                });
+                ctx.restore();
+            }
+        };
+
+        Chart.register(customDataLabels);
+
+        const pieDataLabels = {
+            id: 'pieDataLabels',
+            afterDraw: (chart) => {
+                if (chart.config.type !== 'pie') return;
+                const ctx = chart.ctx;
+                chart.data.datasets.forEach((dataset, i) => {
+                    chart.getDatasetMeta(i).data.forEach((element, index) => {
+                        const value = dataset.data[index];
+                        if (value > 0) {
+                            ctx.fillStyle = '#ffffff';
+                            ctx.font = '600 10px Poppins';
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            const position = element.tooltipPosition();
+                            ctx.fillText(value, position.x, position.y);
+                        }
+                    });
+                });
+            }
+        };
+
+        let nonconfPieChart = new Chart(document.getElementById('nonconfPieChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Wastes', 'Water', 'Oil Leaking', 'Chemical', 'Overflow of pools', '5S', 'Other'],
+                datasets: [{
+                    data: saved.nonconfPieChart || [16, 5, 18, 8, 2, 14, 17],
+                    backgroundColor: ['#5b9bd5', '#ed7d31', '#a5a5a5', '#ffc000', '#4472c4', '#70ad47', '#264478'],
+                    borderWidth: 1,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { top: 0, bottom: 0, left: 0, right: 0 } },
+                plugins: {
+                    legend: {
+                        display: true, position: 'bottom',
+                        labels: { boxWidth: 8, boxHeight: 8, font: { size: 9, family: "'Poppins', sans-serif", weight: '600' }, color: Chart.defaults.color, padding: 6 }
+                    },
+                    tooltip: { enabled: false }
+                },
+                animation: { duration: 0 }
+            },
+            plugins: [pieDataLabels]
+        });
+
+        function createComboChart(canvasId, maxVal, dataArr1, dataArr2, dataArr3) {
+            return new Chart(document.getElementById(canvasId), {
+                type: 'bar',
+                data: {
+                    labels: ['Y25', 'J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+                    datasets: [
+                        { label: '2025 RESULTS', data: dataArr1, backgroundColor: '#0f172a', barPercentage: 0.8, categoryPercentage: 0.8, order: 2, yAxisID: 'y' },
+                        { label: '2026 TARGET', data: dataArr2, backgroundColor: '#cbd5e1', barPercentage: 0.8, categoryPercentage: 0.8, order: 3, yAxisID: 'y' },
+                        { label: 'MONTH BUDGET', type: 'line', data: dataArr3, borderColor: '#059669', borderDash: [3,3], borderWidth: 2, pointRadius: 0, tension: 0, order: 1, yAxisID: 'yRight' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    layout: { padding: { top: 16, right: 0, left: 0, bottom: 0 } },
+                    plugins: {
+                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, font: {size: 11, family: "'Poppins', sans-serif", weight: '600'}, color: Chart.defaults.color, padding: 8 } },
+                        tooltip: { enabled: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: maxVal, grid: { color: '#e2e8f0', drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'}, maxTicksLimit: 5 } },
+                        yRight: { beginAtZero: true, max: maxVal, position: 'right', grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'}, maxTicksLimit: 5 } },
+                        x: { grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'} } }
+                    },
+                    animation: { duration: 0 }
+                }
+            });
+        }
+
+        let dangChart = createComboChart('dangChart', 3.2, 
+            saved.dangChart ? saved.dangChart[0] : [1.04, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            saved.dangChart ? saved.dangChart[1] : [null, 2.70, 1.80, null, null, null, null, null, null, null, null, null, null],
+            saved.dangChart ? saved.dangChart[2] : [null, 1.12, 1.01, 0.97, 0.85, 0.87, 0.79, 0.87, 1.01, 0.99, 0.99, 1.06, 1.11]
+        );
+
+        let liquidChart = createComboChart('liquidChart', 1.0, 
+            saved.liquidChart ? saved.liquidChart[0] : [0.57, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            saved.liquidChart ? saved.liquidChart[1] : [null, 0.62, 0.63, null, null, null, null, null, null, null, null, null, null],
+            saved.liquidChart ? saved.liquidChart[2] : [null, 0.74, 0.73, 0.73, 0.73, 0.72, 0.71, 0.71, 0.78, 0.69, 0.78, 0.78, 0.76]
+        );
+
+        let pkgChart = createComboChart('pkgChart', 3.5, 
+            saved.pkgChart ? saved.pkgChart[0] : [2.85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            saved.pkgChart ? saved.pkgChart[1] : [null, 1.95, 2.41, null, null, null, null, null, null, null, null, null, null],
+            saved.pkgChart ? saved.pkgChart[2] : [null, 1.75, 2.01, 1.95, 1.95, 2.01, 1.91, 1.84, 1.85, 1.84, 1.80, 1.77, 1.81]
+        );
+
+        let waterChart = createComboChart('waterChart', 0.8, 
+            saved.waterChart ? saved.waterChart[0] : [0.14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            saved.waterChart ? saved.waterChart[1] : [null, 0.13, null, null, null, null, null, null, null, null, null, null, null],
+            saved.waterChart ? saved.waterChart[2] : [null, 0.13, 0.11, 0.13, 0.16, 0.17, 0.18, 0.26, 0.64, 0.18, 0.15, 0.14, 0.15]
+        );
+
+        const floatInput = document.getElementById('floatingInput');
+        let activeChart = null;
+        let editDatasetIndex = -1;
+        let editDataIndex = -1;
+
+        function attachClickToChart(chartInstance, containerId) {
+            document.getElementById(chartInstance.canvas.id).addEventListener('click', function(evt) {
+                let points = chartInstance.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+                let dIndex = -1;
+                let pIndex = -1;
+                
+                if (points.length) {
+                    dIndex = points[0].datasetIndex;
+                    pIndex = points[0].index;
+                } else {
+                    const canvasPosition = Chart.helpers.getRelativePosition(evt, chartInstance);
+                    const x = evt.native ? evt.native.offsetX : evt.offsetX;
+                    pIndex = chartInstance.scales.x.getValueForPixel(x);
+                    if (pIndex !== undefined && pIndex >= 0 && pIndex < chartInstance.data.labels.length) {
+                        dIndex = 0; 
+                    }
+                }
+
+                if (dIndex !== -1 && pIndex !== -1) {
+                    activeChart = chartInstance;
+                    editDatasetIndex = dIndex;
+                    editDataIndex = pIndex;
+                    
+                    const canvasRect = this.getBoundingClientRect();
+                    
+                    let elementX = 0;
+                    let elementY = 0;
+
+                    const meta = chartInstance.getDatasetMeta(dIndex);
+                    if (meta.data && meta.data[pIndex]) {
+                        elementX = meta.data[pIndex].x;
+                        elementY = meta.data[pIndex].y;
+                    } else {
+                        elementX = chartInstance.scales.x.getPixelForValue(pIndex);
+                        elementY = chartInstance.chartArea.bottom;
+                    }
+
+                    const absoluteX = window.scrollX + canvasRect.left + elementX;
+                    const absoluteY = window.scrollY + canvasRect.top + elementY;
+
+                    floatInput.style.display = 'block';
+                    document.body.appendChild(floatInput);
+                    floatInput.style.left = (absoluteX - 20) + 'px';
+                    floatInput.style.top = (absoluteY - 20) + 'px';
+                    
+                    const value = chartInstance.data.datasets[dIndex].data[pIndex];
+                    floatInput.value = (value !== null && value !== undefined && value !== 0) ? value : '';
+                    floatInput.focus();
+                }
+            });
+        }
+
+        attachClickToChart(waterChart, 'waterContainer');
+        attachClickToChart(liquidChart, 'liquidContainer');
+        attachClickToChart(pkgChart, 'pkgContainer');
+        attachClickToChart(dangChart, 'dangContainer');
+        attachClickToChart(legalChart, 'legalContainer');
+
+        function updateChartPoint() {
+            if (activeChart && editDatasetIndex !== -1 && editDataIndex !== -1) {
+                let rawVal = floatInput.value.replace(',', '.');
+                let val = parseFloat(rawVal);
+                activeChart.data.datasets[editDatasetIndex].data[editDataIndex] = isNaN(val) ? 0 : val;
+                activeChart.update();
+            }
+            floatInput.style.display = 'none';
+        }
+
+        floatInput.addEventListener('blur', updateChartPoint);
+        floatInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') updateChartPoint(); });
+
+        function updateCSSVariable(varName, color) { root.style.setProperty(varName, color); }
+
+        document.addEventListener('click', (e) => {
+            const isCardClick = e.target.closest('.card');
+            const isToolClick = e.target.closest('#colorTool');
+            const isSettingsBtnClick = e.target.closest('#settingsBtn');
+            const isDownloadBtnClick = e.target.closest('#downloadBtn');
+
+            if (!isCardClick && !isToolClick && !isSettingsBtnClick && !isDownloadBtnClick) {
+                selectedCard = null;
+                cards.forEach(c => c.style.outline = 'none');
+                if(selectedCardLabel) selectedCardLabel.innerText = 'Tümü';
+            }
+        });
+
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                if(e.target.isContentEditable || e.target.tagName === 'INPUT' || e.target.tagName === 'CANVAS') return;
+                cards.forEach(c => c.style.outline = 'none');
+                selectedCard = card;
+                const vurguColor = getComputedStyle(root).getPropertyValue('--vurgu-color').trim();
+                card.style.outline = `2px solid ${vurguColor}`;
+                if(selectedCardLabel) selectedCardLabel.innerText = 'Seçili Kart';
+            });
+        });
+
+        if(resetSelectionBtn) {
+            resetSelectionBtn.addEventListener('click', () => {
+                selectedCard = null;
+                cards.forEach(c => c.style.outline = 'none');
+                if(selectedCardLabel) selectedCardLabel.innerText = 'Tümü';
+            });
+        }
+
+        if(bgColorPicker) bgColorPicker.addEventListener('input', (e) => updateCSSVariable('--bg-color', e.target.value));
+        if(textMainPicker) textMainPicker.addEventListener('input', (e) => updateCSSVariable('--text-main', e.target.value));
+
+        if(textMutedGlobalPicker) {
+            textMutedGlobalPicker.addEventListener('input', (e) => {
+                const newColor = e.target.value;
+                updateCSSVariable('--text-muted', newColor);
+                Chart.defaults.color = newColor;
+                const updateChartAxes = (chart) => {
+                    if(chart.options.scales.y) chart.options.scales.y.ticks.color = newColor;
+                    if(chart.options.scales.x) chart.options.scales.x.ticks.color = newColor;
+                    if(chart.options.scales.yRight) chart.options.scales.yRight.ticks.color = newColor;
+                    chart.update();
+                };
+                updateChartAxes(legalChart);
+                updateChartAxes(dangChart);
+                updateChartAxes(liquidChart);
+                updateChartAxes(pkgChart);
+                updateChartAxes(waterChart);
+            });
+        }
+
+        if(accentColorPicker) {
+            accentColorPicker.addEventListener('input', (e) => {
+                const newColor = e.target.value;
+                updateCSSVariable('--vurgu-color', newColor);
+                if (selectedCard) { selectedCard.style.outlineColor = newColor; }
+            });
+        }
+
+        if(cardBgPicker) cardBgPicker.addEventListener('input', (e) => {
+            if (selectedCard) selectedCard.style.backgroundColor = e.target.value;
+            else { updateCSSVariable('--card-bg', e.target.value); cards.forEach(c => c.style.backgroundColor = ''); }
+        });
+
+        if(borderColorPicker) borderColorPicker.addEventListener('input', (e) => {
+            if (selectedCard) selectedCard.style.borderColor = e.target.value;
+            else { updateCSSVariable('--border-color', e.target.value); cards.forEach(c => c.style.borderColor = ''); }
+        });
+
+        if(borderWidthPicker) borderWidthPicker.addEventListener('input', (e) => {
+            let val = e.target.value + 'px';
+            if (selectedCard) selectedCard.style.borderWidth = val;
+            else { updateCSSVariable('--card-border-width', val); cards.forEach(c => c.style.borderWidth = ''); }
+        });
+
+        if(borderRadiusPicker) borderRadiusPicker.addEventListener('input', (e) => {
+            let val = e.target.value + 'px';
+            if (selectedCard) selectedCard.style.borderRadius = val;
+            else { updateCSSVariable('--card-border-radius', val); cards.forEach(c => c.style.borderRadius = ''); }
+        });
+
+        if(iconColorPicker) iconColorPicker.addEventListener('input', (e) => {
+            const newColor = e.target.value;
+            if (selectedCard) { const icon = selectedCard.querySelector('.card-icon'); if (icon) icon.style.color = newColor; }
+            else { updateCSSVariable('--icon-color', newColor); cards.forEach(c => { const icon = c.querySelector('.card-icon'); if (icon) icon.style.color = ''; }); }
+        });
+
+        if(cardTextMainPicker) cardTextMainPicker.addEventListener('input', (e) => {
+            if (selectedCard) { const elements = selectedCard.querySelectorAll(selectorsMainText); elements.forEach(el => el.style.color = e.target.value); }
+        });
+
+        if(cardTextMutedPicker) cardTextMutedPicker.addEventListener('input', (e) => {
+            if (selectedCard) { const elements = selectedCard.querySelectorAll(selectorsMutedText); elements.forEach(el => el.style.color = e.target.value); }
+        });
+
+        // AYARLAR BUTONUNU ÇALIŞTIRAN KOD
+        settingsBtn.addEventListener('click', () => { colorTool.style.display = 'block'; });
+        closeTool.addEventListener('click', () => { colorTool.style.display = 'none'; });
+
+        saveBtn.addEventListener('click', () => {
+            colorTool.style.display = 'none'; floatInput.style.display = 'none';
+            selectedCard = null; cards.forEach(c => c.style.outline = 'none');
+            if(selectedCardLabel) selectedCardLabel.innerText = 'Tümü';
+        });
+
+        function updateKpiColors() {
+            document.querySelectorAll('.kpi-ratio').forEach(cell => {
+                let text = cell.innerText.trim(); let parts = text.split('/');
+                if(parts.length === 2) {
+                    let actual = parseFloat(parts[0].trim()); let target = parseFloat(parts[1].trim());
+                    if(!isNaN(actual) && !isNaN(target)) { cell.style.color = (actual > target) ? 'var(--accent-red)' : 'var(--accent-green)'; }
+                    else { cell.style.color = 'var(--text-main)'; }
+                } else { cell.style.color = 'var(--text-main)'; }
+            });
+        }
+
+        document.querySelector('.kpi-table').addEventListener('input', function(e) { if(e.target.classList.contains('kpi-ratio')) updateKpiColors(); });
+        document.querySelector('.kpi-table').addEventListener('blur', function(e) { if(e.target.classList.contains('kpi-ratio')) updateKpiColors(); }, true);
+        
+        updateKpiColors();
+    </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -751,176 +1357,74 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const DOC_ID = "cevre_data_v1";
+        const DOC_ID = "cevre_dashboard_verisi";
 
-        // Grafik Değişkenleri
-        let cevreChart, legalChart, nonconfPieChart, dangChart, liquidChart, pkgChart, waterChart;
-        const root = document.querySelector(':root');
-
-        // Sayfa Yüklendiğinde
-        window.addEventListener('load', async () => {
-            await loadFromFirebase();
-            document.getElementById('loadingOverlay').style.display = 'none';
-        });
-
-        async function loadFromFirebase() {
-            try {
-                const docRef = doc(db, "dashboards", DOC_ID);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    // Metinleri Yükle
-                    Object.keys(data.texts || {}).forEach(id => {
-                        const el = document.getElementById(id);
-                        if(el) el.innerText = data.texts[id];
-                    });
-                    // Renkleri Yükle
-                    Object.keys(data.colors || {}).forEach(prop => {
-                        root.style.setProperty(prop, data.colors[prop]);
-                    });
-                    initCharts(data.charts || {});
-                } else {
-                    initCharts({});
-                }
-            } catch (e) {
-                console.error("Yükleme hatası:", e);
-                initCharts({});
-            }
-        }
-
-        async function saveToFirebase() {
+        async function cloudSave() {
             const btn = document.getElementById('downloadBtn');
             btn.className = "fa-solid fa-spinner fa-spin action-icon";
 
-            const payload = {
+            const data = {
                 texts: {},
-                colors: {
-                    "--bg-color": getComputedStyle(root).getPropertyValue('--bg-color').trim(),
-                    "--text-main": getComputedStyle(root).getPropertyValue('--text-main').trim(),
-                    "--text-muted": getComputedStyle(root).getPropertyValue('--text-muted').trim(),
-                    "--vurgu-color": getComputedStyle(root).getPropertyValue('--vurgu-color').trim()
-                },
                 charts: {
                     cevre: cevreChart.data.datasets[0].data,
-                    legal: legalChart.data.datasets.map(d => d.data),
+                    legal: legalChart.data.datasets.map(ds => ds.data),
                     nonconf: nonconfPieChart.data.datasets[0].data,
-                    dang: dangChart.data.datasets.map(d => d.data),
-                    pkg: pkgChart.data.datasets.map(d => d.data),
-                    liq: liquidChart.data.datasets.map(d => d.data),
-                    wat: waterChart.data.datasets.map(d => d.data)
+                    dang: dangChart.data.datasets.map(ds => ds.data),
+                    pkg: pkgChart.data.datasets.map(ds => ds.data),
+                    liquid: liquidChart.data.datasets.map(ds => ds.data),
+                    water: waterChart.data.datasets.map(ds => ds.data)
                 }
             };
 
-            // Tüm contenteditable alanları tara
             document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-                if(el.id) payload.texts[el.id] = el.innerText;
+                if (el.id) data.texts[el.id] = el.innerText;
             });
 
             try {
-                await setDoc(doc(db, "dashboards", DOC_ID), payload);
-                alert("Veriler Buluta Kaydedildi!");
+                await setDoc(doc(db, "veriler", DOC_ID), data);
+                alert("Veriler Buluta Kaydedildi.");
             } catch (e) {
-                alert("Hata oluştu: " + e.message);
+                console.error("Kayıt hatası:", e);
+                alert("Kayıt sırasında hata oluştu.");
             } finally {
                 btn.className = "fa-solid fa-cloud-arrow-up action-icon";
             }
         }
 
-        document.getElementById('downloadBtn').addEventListener('click', saveToFirebase);
-
-        function initCharts(saved) {
-            Chart.defaults.font.family = "'Poppins'";
-            
-            // Çevre Eğitim
-            cevreChart = new Chart(document.getElementById('cevreEgitimChart'), {
-                type: 'doughnut',
-                data: { datasets: [{ data: saved.cevre || [88, 12], backgroundColor: ['#059669', '#e2e8f0'], borderWidth: 0 }] },
-                options: { cutout: '70%', plugins: { legend: {display:false} }, animation: false }
-            });
-
-            // Legal
-            legalChart = new Chart(document.getElementById('legalChart'), {
-                type: 'bar',
-                data: {
-                    labels: ['J','F','M','A','M','J','J','A','S','O','N','D'],
-                    datasets: [
-                        { label:'Reel', data: saved.legal ? saved.legal[0] : [91,91,0,0,0,0,0,0,0,0,0,0], backgroundColor:'#0f172a' },
-                        { label:'Budget', type:'line', data: saved.legal ? saved.legal[1] : [100,100,100,100,100,100,100,100,100,100,100,100], borderColor:'#059669', borderDash:[3,3] }
-                    ]
-                },
-                options: { responsive:true, maintainAspectRatio:false, animation:false }
-            });
-
-            // Nonconf
-            nonconfPieChart = new Chart(document.getElementById('nonconfPieChart'), {
-                type: 'pie',
-                data: { datasets: [{ data: saved.nonconf || [16, 5, 18, 8, 2, 14, 17], backgroundColor: ['#5b9bd5', '#ed7d31', '#a5a5a5', '#ffc000', '#4472c4', '#70ad47', '#264478'] }] },
-                options: { responsive:true, maintainAspectRatio:false, animation:false }
-            });
-
-            // Combo Charts
-            function makeCombo(id, data) {
-                return new Chart(document.getElementById(id), {
-                    type: 'bar',
-                    data: {
-                        labels: ['Y25','J','F','M','A','M','J','J','A','S','O','N','D'],
-                        datasets: [
-                            { label:'Real', data: data ? data[0] : [1,0,0,0,0,0,0,0,0,0,0,0,0], backgroundColor:'#0f172a' },
-                            { label:'Target', data: data ? data[1] : [null,2,1.5,null,null,null,null,null,null,null,null,null,null], backgroundColor:'#cbd5e1' },
-                            { label:'Budget', type:'line', data: data ? data[2] : [null,1,1,1,1,1,1,1,1,1,1,1,1], borderColor:'#059669', borderDash:[3,3] }
-                        ]
-                    },
-                    options: { responsive:true, maintainAspectRatio:false, animation:false }
-                });
-            }
-
-            dangChart = makeCombo('dangChart', saved.dang);
-            pkgChart = makeCombo('pkgChart', saved.pkg);
-            liquidChart = makeCombo('liquidChart', saved.liq);
-            waterChart = makeCombo('waterChart', saved.wat);
-
-            setupChartInputs();
-        }
-
-        function setupChartInputs() {
-            const fInput = document.getElementById('floatingInput');
-            let activeChart, dsIdx, dtIdx;
-
-            const attach = (chart) => {
-                chart.canvas.onclick = (e) => {
-                    const points = chart.getElementsAtEventForMode(e, 'nearest', {intersect:true}, true);
-                    if(points.length) {
-                        activeChart = chart;
-                        dsIdx = points[0].datasetIndex;
-                        dtIdx = points[0].index;
-                        fInput.style.display = 'block';
-                        fInput.style.left = e.pageX + 'px';
-                        fInput.style.top = e.pageY + 'px';
-                        fInput.value = chart.data.datasets[dsIdx].data[dtIdx] || '';
-                        fInput.focus();
+        async function cloudLoad() {
+            try {
+                const docSnap = await getDoc(doc(db, "veriler", DOC_ID));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    
+                    if (data.texts) {
+                        Object.keys(data.texts).forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) el.innerText = data.texts[id];
+                        });
                     }
-                };
-            };
 
-            [legalChart, dangChart, pkgChart, liquidChart, waterChart].forEach(attach);
-
-            fInput.onblur = () => {
-                if(activeChart) {
-                    activeChart.data.datasets[dsIdx].data[dtIdx] = parseFloat(fInput.value) || 0;
-                    activeChart.update();
+                    if (data.charts) {
+                        cevreChart.data.datasets[0].data = data.charts.cevre;
+                        legalChart.data.datasets.forEach((ds, i) => ds.data = data.charts.legal[i]);
+                        nonconfPieChart.data.datasets[0].data = data.charts.nonconf;
+                        dangChart.data.datasets.forEach((ds, i) => ds.data = data.charts.dang[i]);
+                        pkgChart.data.datasets.forEach((ds, i) => ds.data = data.charts.pkg[i]);
+                        liquidChart.data.datasets.forEach((ds, i) => ds.data = data.charts.liquid[i]);
+                        waterChart.data.datasets.forEach((ds, i) => ds.data = data.charts.water[i]);
+                        
+                        [cevreChart, legalChart, nonconfPieChart, dangChart, pkgChart, liquidChart, waterChart].forEach(c => c.update());
+                    }
+                    updateAtikBar();
+                    updateKpiColors();
                 }
-                fInput.style.display = 'none';
-            };
+            } catch (e) {
+                console.error("Yükleme hatası:", e);
+            }
         }
 
-        // Renk Ayarları
-        document.getElementById('settingsBtn').onclick = () => document.getElementById('colorTool').style.display='block';
-        document.getElementById('closeTool').onclick = () => document.getElementById('colorTool').style.display='none';
-        document.getElementById('saveBtn').onclick = () => document.getElementById('colorTool').style.display='none';
-
-        document.getElementById('bgColorPicker').oninput = (e) => root.style.setProperty('--bg-color', e.target.value);
-        document.getElementById('textMainPicker').oninput = (e) => root.style.setProperty('--text-main', e.target.value);
-        document.getElementById('accentColorPicker').oninput = (e) => root.style.setProperty('--vurgu-color', e.target.value);
+        document.getElementById('downloadBtn').addEventListener('click', cloudSave);
+        window.addEventListener('load', cloudLoad);
     </script>
+
 </body></html>

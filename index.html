@@ -9,7 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-database-compat.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -32,7 +32,7 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
             margin: 0;
-            padding: 16px 24px;
+            padding: 12px 24px;
             color: var(--text-main);
             transition: background-color 0.2s ease, color 0.2s ease;
             height: 100vh;
@@ -54,14 +54,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
             border-bottom: 2px solid var(--border-color);
             flex-shrink: 0;
         }
 
         .brand-logo {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--text-main);
             letter-spacing: 0.5px;
@@ -101,23 +101,34 @@
         .dashboard-layout {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
             flex-grow: 1;
             min-height: 0;
         }
 
         .top-section {
             display: grid;
-            grid-template-columns: 1.4fr 1fr 1fr 1.4fr; 
-            gap: 16px;
+            grid-template-columns: 1.35fr 0.85fr 0.9fr 1.4fr; 
+            gap: 12px;
             flex: 1;
             min-height: 0;
+        }
+
+        .legal-card-wrapper {
+            flex-grow: 1;
+            display: flex;
+            min-height: 0;
+        }
+
+        .water-plan-wrapper {
+            flex-shrink: 0;
+            display: flex;
         }
 
         .bottom-section {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
+            gap: 12px;
             height: 38%; 
             flex-shrink: 0;
         }
@@ -126,13 +137,12 @@
             background-color: var(--card-bg);
             border: var(--card-border-width) solid var(--border-color);
             border-radius: var(--card-border-radius);
-            padding: 14px 16px; 
+            padding: 10px 12px; 
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
             display: flex;
             flex-direction: column;
             overflow: hidden;
             width: 100%;
-            height: 100%;
             box-sizing: border-box;
             transition: border-width 0.1s, outline 0.1s;
             cursor: pointer;
@@ -142,7 +152,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             pointer-events: none;
             flex-shrink: 0;
             justify-content: space-between;
@@ -165,14 +175,14 @@
         }
 
         .card-title {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 800;
             color: var(--text-main);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             outline: none;
             pointer-events: auto;
-            line-height: 1.3;
+            line-height: 1.1;
         }
 
         .card-content-area {
@@ -185,7 +195,7 @@
         }
 
         .metric-large {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             color: var(--text-main);
             line-height: 1;
@@ -198,8 +208,8 @@
         .metric-sub {
             font-size: 12px;
             color: var(--text-muted);
-            margin-top: 4px;
-            font-weight: 600;
+            margin-top: 2px;
+            font-weight: 500;
             outline: none;
             pointer-events: auto;
         }
@@ -208,7 +218,7 @@
             background-color: var(--border-color);
             height: 6px;
             border-radius: 3px;
-            margin-top: 8px;
+            margin-top: 6px;
             overflow: hidden;
             width: 100%;
         }
@@ -233,7 +243,7 @@
         .chart-container {
             position: relative;
             height: 100%;
-            width: 70px; 
+            width: 60px; 
             pointer-events: auto;
             flex-shrink: 0;
         }
@@ -245,7 +255,7 @@
             height: 100%;
             min-height: 0;
             pointer-events: auto;
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         .chart-container-large canvas, .chart-container canvas, #nonconfPieChart {
@@ -260,7 +270,7 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             pointer-events: auto;
             flex-wrap: wrap;
         }
@@ -280,12 +290,12 @@
         }
 
         .sub-section-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 4px;
+            padding-bottom: 2px;
             outline: none;
             pointer-events: auto;
         }
@@ -294,29 +304,25 @@
             display: flex;
             align-items: baseline;
             gap: 4px;
-            margin-top: 4px;
         }
 
         .fraction-current {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             color: var(--text-main);
-            line-height: 1;
             outline: none;
             pointer-events: auto;
         }
 
         .fraction-divider {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
-            line-height: 1;
             color: var(--text-muted);
         }
 
         .fraction-total {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
-            line-height: 1;
             color: var(--text-muted);
             outline: none;
             pointer-events: auto;
@@ -330,7 +336,7 @@
         }
         .kpi-table th, .kpi-table td {
             border-bottom: 1px solid var(--border-color);
-            padding: 5px 6px;
+            padding: 3px 4px;
             text-align: center;
             outline: none;
             white-space: nowrap;
@@ -344,15 +350,36 @@
         .kpi-table td {
             font-weight: 600;
             color: var(--text-main);
-            font-size: 13px;
         }
         .kpi-table tr:last-child td { border-bottom: none; }
         .kpi-table .text-left { text-align: left; }
-
-        .remark-table td {
-            font-size: 14px;
-        }
         
+        .status-ok { color: var(--accent-green); font-weight: 800; }
+        .status-nok { color: var(--accent-red); font-weight: 800; }
+        .status-plan { color: var(--accent-yellow); font-weight: 800; }
+
+        .water-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            pointer-events: auto;
+        }
+        .water-table th, .water-table td {
+            padding: 2px 4px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            outline: none;
+        }
+        .water-table th {
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 10px;
+            background-color: rgba(0,0,0,0.02);
+        }
+        .water-table td { font-weight: 600; color: var(--text-main); }
+        .water-table tr:last-child td { border-bottom: none; }
+
         .floating-input {
             position: absolute;
             width: 40px;
@@ -473,7 +500,7 @@
         }
     </style>
     
-    <script id="saved-state">window.__SAVED_CHART_DATA__ = {"cevreScore":[90,10],"legalChart":[[91.4,91.4,91.4,0,0,0,0,0,0,0,0,0],[100,100,100,100,100,100,100,100,100,100,100,100]],"nonconfPieChart":[17,5,18,8,2,14,16],"dangChart":[[1.04,1.12,1.48,0,0,0,0,0,0,0,0,0,0],[null,2.7,1.8,null,null,null,null,null,null,null,null,null,null],[null,1.12,1.01,0.97,0.85,0.87,0.79,0.87,1.01,0.99,0.99,1.06,1.11]],"pkgChart":[[2.85,1.75,1.95,0,0,0,0,0,0,0,0,0,0],[null,1.95,2.41,null,null,null,null,null,null,null,null,null,null],[null,1.75,2.01,1.95,1.95,2.01,1.91,1.84,1.85,1.84,1.8,1.77,1.81]],"liquidChart":[[0.57,0.62,0.69,0,0,0,0,0,0,0,0,0,0],[null,0.62,0.63,null,null,null,null,null,null,null,null,null,null],[null,0.74,0.73,0.73,0.73,0.72,0.71,0.71,0.78,0.69,0.78,0.78,0.76]],"waterChart":[[0.14,0.13,0.08,0,0,0,0,0,0,0,0,0,0],[null,0.13,null,null,null,null,null,null,null,null,null,null,null],[null,0.13,0.11,0.13,0.16,0.17,0.18,0.26,0.64,0.18,0.15,0.14,0.15]]};</script>
+    <script id="saved-state">window.__SAVED_CHART_DATA__ = {"cevreScore":[88,12],"legalChart":[[91.4,91.4,0,0,0,0,0,0,0,0,0,0],[100,100,100,100,100,100,100,100,100,100,100,100]],"nonconfPieChart":[16,5,18,8,2,14,17],"dangChart":[[1.04,0,0,0,0,0,0,0,0,0,0,0,0],[null,2.7,1.8,null,null,null,null,null,null,null,null,null,null],[null,1.12,1.01,0.97,0.85,0.87,0.79,0.87,1.01,0.99,0.99,1.06,1.11]],"pkgChart":[[2.85,0,0,0,0,0,0,0,0,0,0,0,0],[null,1.95,2.41,null,null,null,null,null,null,null,null,null,null],[null,1.75,2.01,1.95,1.95,2.01,1.91,1.84,1.85,1.84,1.8,1.77,1.81]],"liquidChart":[[0.57,0,0,0,0,0,0,0,0,0,0,0,0],[null,0.62,0.63,null,null,null,null,null,null,null,null,null,null],[null,0.74,0.73,0.73,0.73,0.72,0.71,0.71,0.78,0.69,0.78,0.78,0.76]],"waterChart":[[0.14,0,0,0,0,0,0,0,0,0,0,0,0],[null,0.13,null,null,null,null,null,null,null,null,null,null,null],[null,0.13,0.11,0.13,0.16,0.17,0.18,0.26,0.64,0.18,0.15,0.14,0.15]]};</script>
 </head>
 <body>
 
@@ -484,7 +511,7 @@
         <div class="header-right">
             <i class="fa-solid fa-cloud-arrow-up action-icon" id="downloadBtn" title="Buluta Kaydet"></i>
             <i class="fas fa-cog action-icon" id="settingsBtn" title="Renk ve Görünüm Ayarları"></i>
-            <div class="date" contenteditable="true" id="main_date">30 NİSAN 2026</div>
+            <div class="date" contenteditable="true" id="main_date">26 MART 2026</div>
         </div>
     </div>
 
@@ -522,10 +549,9 @@
 
     <div class="dashboard-layout">
         <div class="top-section">
-            
-            <div style="display: flex; flex-direction: column; gap: 16px; min-height: 0;">
-                <div style="display: flex; gap: 16px; flex-shrink: 0; height: 140px;">
-                    <div class="card card-egitim" style="outline: none;">
+            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+                <div style="display: flex; gap: 12px; flex-shrink: 0;">
+                    <div class="card card-egitim" style="flex: 1 1 0%; outline: none;">
                         <div class="card-header">
                             <div class="card-header-left">
                                 <div class="card-icon"><i class="fa-solid fa-person-chalkboard"></i></div>
@@ -535,7 +561,7 @@
                         <div class="card-content-area">
                             <div class="chart-wrapper-row">
                                 <div style="pointer-events: auto;">
-                                    <div class="metric-large" id="cevreScore" contenteditable="true">90%</div>
+                                    <div class="metric-large" id="cevreScore" contenteditable="true">88%</div>
                                     <div class="metric-sub" contenteditable="true" id="cevreLabel">Tamamlanma Oranı</div>
                                 </div>
                                 <div class="chart-container"><canvas id="cevreEgitimChart"></canvas></div>
@@ -543,7 +569,7 @@
                         </div>
                     </div>
 
-                    <div class="card card-denetim" style="outline: none;">
+                    <div class="card card-denetim" style="flex: 1 1 0%; outline: none;">
                         <div class="card-header">
                             <div class="card-header-left">
                                 <div class="card-icon"><i class="fa-solid fa-trash-can-arrow-up"></i></div>
@@ -553,20 +579,20 @@
                         <div class="card-content-area">
                             <div>
                                 <div class="fraction-val">
-                                    <span class="fraction-current" id="atikCurrent" contenteditable="true">18</span>
+                                    <span class="fraction-current" id="atikCurrent" contenteditable="true">12</span>
                                     <span class="fraction-divider">/</span>
-                                    <span class="fraction-total" id="atikTotal" contenteditable="true">18</span>
+                                    <span class="fraction-total" id="atikTotal" contenteditable="true">15</span>
                                 </div>
                                 <div class="metric-sub" contenteditable="true" id="atikLabel">Tamamlanan Denetimler</div>
                                 <div class="progress-bar-bg">
-                                    <div id="atikBar" class="progress-bar-fill" style="width: 100%;"></div>
+                                    <div id="atikBar" class="progress-bar-fill" style="width: 80%;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card card-kpi" style="flex-grow: 1; outline: none;">
+                <div class="card card-kpi" style="flex-grow: 1; min-height: 0px; outline: none;">
                     <div class="card-header">
                         <div class="card-header-left">
                             <div class="card-icon"><i class="fa-solid fa-table-list"></i></div>
@@ -578,23 +604,23 @@
                             <thead>
                                 <tr>
                                     <th contenteditable="true" class="text-left" style="width: 30%;">Kategori</th>
-                                    <th contenteditable="true" class="text-left" style="width: 40%;">KPI</th>
-                                    <th contenteditable="true" style="width: 30%; text-align: center;">Gerçekleşen / Hedef</th>
+                                    <th contenteditable="true" class="text-left" style="width: 50%;">KPI</th>
+                                    <th contenteditable="true" style="width: 20%; text-align: center;">Gerçekleşen / Hedef</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td contenteditable="true" class="text-left" id="kpiKat1">⚡ Enerji</td>
                                     <td contenteditable="true" class="text-left" id="kpiMet1">Elektrik Tüketimi</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum1">99/94</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum1">100/86</td>
                                 </tr>
                                 <tr>
                                     <td contenteditable="true" class="text-left" id="kpiKat2">🔥 Enerji</td>
                                     <td contenteditable="true" class="text-left" id="kpiMet2">Doğalgaz Tüketimi</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum2">41/41</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum2">43/45</td>
                                 </tr>
                                 <tr>
-                                    <td contenteditable="true" class="text-left" id="kpiKat3">💧 Su (TQM)</td>
+                                    <td contenteditable="true" class="text-left" id="kpiKat3">💧 Su</td>
                                     <td contenteditable="true" class="text-left" id="kpiMet3">Su Tüketimi</td>
                                     <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum3">0.1/0.13</td>
                                 </tr>
@@ -606,15 +632,15 @@
                                 <tr>
                                     <td contenteditable="true" class="text-left" id="kpiKat5">♻ Atık</td>
                                     <td contenteditable="true" class="text-left" id="kpiMet5">Ambalaj Atığı</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum5">1.98/1.95</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum5">2.41/1.95</td>
                                 </tr>
                                 <tr>
                                     <td contenteditable="true" class="text-left" id="kpiKat6">☠ Atık</td>
                                     <td contenteditable="true" class="text-left" id="kpiMet6">Tehlikeli Atık</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum6">1.48/0.97</td>
+                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum6">1.8/1.12</td>
                                 </tr>
                                 <tr>
-                                    <td contenteditable="true" class="text-left" id="kpiKat7">🛢 End. Sıvı (TQM)</td>
+                                    <td contenteditable="true" class="text-left" id="kpiKat7">🛢 End. Sıvı</td>
                                     <td contenteditable="true" class="text-left" id="kpiMet7">End. Sıvı Tüketimi</td>
                                     <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum7">0.63/0.73</td>
                                 </tr>
@@ -624,20 +650,74 @@
                 </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 16px; min-height: 0;">
-                <div class="card card-dogal" style="height: 140px; outline: none; flex-shrink: 0;">
+            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+                
+                <div class="card card-dogal" style="flex-shrink: 0; outline: none;">
                     <div class="card-header">
                         <div class="card-header-left">
                             <div class="card-icon"><i class="fa-solid fa-leaf"></i></div>
-                            <div class="card-title" contenteditable="true" id="titleDogal">YÖNETİM SİSTEMİ PERFORMANS DEĞERLENDİRMESİ</div>
+                            <div class="card-title" contenteditable="true" id="titleDogal">Yönetim sistemi PERFORMANS DEĞERLENDİRMESİ</div>
                         </div>
                     </div>
-                    <div class="card-content-area" style="justify-content: center; align-items: center; padding-top: 4px;">
-                        <div id="dogalScore" contenteditable="true" style="font-size: 38px; font-weight: 800; line-height: 1; color: var(--text-main); text-align: center; width: 100%; pointer-events: auto;">%89</div>
+                    <div class="card-content-area" style="justify-content: center; align-items: center; padding-top: 4px; min-height: 48px;">
+                        <div id="dogalScore" contenteditable="true" style="font-size: 28px; font-weight: 800; line-height: 1; color: var(--text-main); text-align: center; width: 100%; pointer-events: auto;"><br></div>
+                        <div class="metric-sub" id="dogalLabel" style="display: none;"></div>
                     </div>
                 </div>
 
-                <div class="card card-remark" style="flex-grow: 1; outline: none;">
+                <div class="card card-nonconf" style="flex-grow: 1; outline: none;">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <div class="card-title" contenteditable="true" id="titleNonconf">NON-CONFORMITIES AND CORRECTIVE ACTIONS</div>
+                        </div>
+                    </div>
+                    <div class="card-content-area" style="padding-top: 4px; display: flex; flex-direction: column; height: 100%; min-height: 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; flex-shrink: 0; padding: 0 4px; pointer-events: auto;">
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Top: <span id="ncTotal" contenteditable="true">143</span></div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Açık: <span id="ncOpen" contenteditable="true" style="color: var(--accent-red);">43</span></div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Kapatıldı: <span id="ncClosed" contenteditable="true" style="color: var(--accent-green);">100</span></div>
+                        </div>
+                        <div style="flex-grow: 1; position: relative; min-height: 0; width: 100%; pointer-events: auto;">
+                            <canvas id="nonconfPieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+                <div class="card card-tatbikat" style="flex-grow: 1; min-height: 0px; outline: none;">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <div class="card-icon"><i class="fa-solid fa-person-running"></i></div>
+                            <div class="card-title" contenteditable="true" id="titleTatbikat">ÇEVRE TATBİKATLARI</div>
+                        </div>
+                    </div>
+                    <div class="card-content-area" style="flex-direction: row; gap: 12px; align-items: stretch; height: 100%;">
+                        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0;">
+                            <div class="sub-section-title" contenteditable="true" id="tatbikatTip1">KİMYASAL DÖKÜLME TATBİKATLARI</div>
+                            <div class="info-row">
+                                <span class="info-label" contenteditable="true">Planlanan:</span>
+                                <span class="info-val" id="tatbikatKimPlan" contenteditable="true">4 ADET</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label" contenteditable="true">Gerçekleşen:</span>
+                                <span class="info-val" id="tatbikatKimGerc" contenteditable="true" style="color: var(--accent-green);">3 ADET</span>
+                            </div>
+                            <div class="sub-section-title" contenteditable="true" style="margin-top: 8px;" id="tatbikatTip2">ADR TATBİKATLARI</div>
+                            <div class="info-row">
+                                <span class="info-label" contenteditable="true">Planlanan:</span>
+                                <span class="info-val" id="tatbikatAdrPlan" contenteditable="true">2 ADET</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label" contenteditable="true">Gerçekleşen:</span>
+                                <span class="info-val" id="tatbikatAdrGerc" contenteditable="true" style="color: var(--accent-green);">2 ADET</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-remark" style="flex-shrink: 0; outline: none;">
                     <div class="card-header">
                         <div class="card-header-left">
                             <div class="card-icon"><i class="fa-solid fa-clipboard-check"></i></div>
@@ -645,7 +725,7 @@
                         </div>
                     </div>
                     <div class="card-content-area" style="justify-content: flex-start;">
-                        <table class="kpi-table remark-table" style="height: 100%;">
+                        <table class="kpi-table">
                             <thead>
                                 <tr>
                                     <th contenteditable="true" class="text-left" style="width: 50%;">Denetim Tipi</th>
@@ -655,19 +735,19 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td contenteditable="true" class="text-left" id="rmkTip1">Horse Global Evaluation</td>
-                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta1">16</td>
-                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi1">«2»</td>
+                                    <td contenteditable="true" class="text-left" id="rmkTip1">DQS</td>
+                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta1">2</td>
+                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi1">«0»</td>
                                 </tr>
                                 <tr>
-                                    <td contenteditable="true" class="text-left" id="rmkTip2">DIŞ DENETİM</td>
-                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta2">23</td>
-                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi2">-</td>
+                                    <td contenteditable="true" class="text-left" id="rmkTip2">Horse Global Evaluation</td>
+                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta2">20</td>
+                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi2">«0»</td>
                                 </tr>
                                 <tr>
-                                    <td contenteditable="true" class="text-left" id="rmkTip3">WORDLEX DENETİMİ</td>
-                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta3">39</td>
-                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi3">-</td>
+                                    <td contenteditable="true" class="text-left" id="rmkTip3">Bureau Veritas</td>
+                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta3">27</td>
+                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi3">«0»</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -675,38 +755,62 @@
                 </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 16px; min-height: 0;">
-                <div class="card card-nonconf" style="flex-grow: 1; outline: none;">
-                    <div class="card-header">
-                        <div class="card-header-left">
-                            <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                            <div class="card-title" contenteditable="true" id="titleNonconf">NON-CONFORMITIES AND CORRECTIVE ACTIONS</div>
+            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+                <div class="legal-card-wrapper">
+                    <div class="card" style="width: 100%; outline: none;">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                                <div class="card-title" contenteditable="true" id="titleLegal">LEGAL &amp; REGULATORY ENVIRONMENTAL COMPLIANCE</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-content-area" style="padding-top: 8px; display: flex; flex-direction: column; height: 100%; min-height: 0;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-shrink: 0; padding: 0 4px; pointer-events: auto;">
-                            <div style="font-size: 14px; font-weight: 700; color: var(--text-main);">Top: <span id="ncTotal" contenteditable="true">143</span></div>
-                            <div style="font-size: 14px; font-weight: 700; color: var(--text-main);">Açık: <span id="ncOpen" contenteditable="true" style="color: var(--accent-red);">43</span></div>
-                            <div style="font-size: 14px; font-weight: 700; color: var(--text-main);">Kapatıldı: <span id="ncClosed" contenteditable="true" style="color: var(--accent-green);">100</span></div>
-                        </div>
-                        <div style="flex-grow: 1; position: relative; min-height: 0; width: 100%; pointer-events: auto;">
-                            <canvas id="nonconfPieChart"></canvas>
+                        <div class="card-content-area" id="legalContainer">
+                            <div class="chart-container-large" style="margin-top: 0;">
+                                <canvas id="legalChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div style="display: flex; flex-direction: column; gap: 16px; min-height: 0;">
-                <div class="card" style="flex-grow: 1; outline: none;">
-                    <div class="card-header">
-                        <div class="card-header-left">
-                            <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
-                            <div class="card-title" contenteditable="true" id="titleLegal">LEGAL & REGULATORY ENVIRONMENTAL COMPLIANCE</div>
+                <div class="water-plan-wrapper">
+                    <div class="card" style="width: 100%; outline: none;">
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <div class="card-icon"><i class="fa-solid fa-droplet"></i></div>
+                                <div class="card-title" contenteditable="true" id="titleWaterAction">WATER ACTION PLAN</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-content-area" id="legalContainer" style="padding-top: 8px;">
-                        <div class="chart-container-large" style="margin-top: 0;">
-                            <canvas id="legalChart"></canvas>
+                        <div class="card-content-area" style="justify-content: flex-start;">
+                            <table class="water-table">
+                                <thead>
+                                    <tr>
+                                        <th contenteditable="true" style="width: 50%;">Aksiyon</th>
+                                        <th contenteditable="true" style="width: 15%; text-align: center;">Hedef m3/Yıl</th>
+                                        <th contenteditable="true" style="width: 15%; text-align: center;">Gerçek.</th>
+                                        <th contenteditable="true" style="width: 20%; text-align: center;">Durum</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td contenteditable="true" id="waterAks1">Kaçak Giderimi Dijital Takip</td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterHed1">1000</td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterGer1">850</td>
+                                        <td contenteditable="true" id="waterDur1" style="color:var(--vurgu-color); font-weight:800; text-align: center; font-size: 11px;">DEVAM EDİYOR</td>
+                                    </tr>
+                                    <tr>
+                                        <td contenteditable="true" id="waterAks2">Yağmur Hasadı Tankı Kurulumu</td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterHed2"><br></td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterGer2">0</td>
+                                        <td contenteditable="true" id="waterDur2" class="status-plan" style="text-align: center; font-size: 11px;">PLANLANDI</td>
+                                    </tr>
+                                    <tr>
+                                        <td contenteditable="true" id="waterAks3">Departman Sayaç Optimizasyonu</td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterHed3">-</td>
+                                        <td contenteditable="true" style="text-align: center;" id="waterGer3">-</td>
+                                        <td contenteditable="true" id="waterDur3" class="status-ok" style="text-align: center; font-size: 11px;">PLANLANDI</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -720,7 +824,7 @@
                 <div class="card-header">
                     <div class="card-header-left">
                         <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
-                        <div class="card-title" contenteditable="true" id="titleDang">CUMUL DANG. WASTES (KG/TAJ)</div>
+                        <div class="card-title" contenteditable="true" id="titleDang">CUMUL DANG. WASTES (kg/TAJ)</div>
                     </div>
                 </div>
                 <div class="card-content-area" id="dangContainer">
@@ -734,7 +838,7 @@
                 <div class="card-header">
                     <div class="card-header-left">
                         <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
-                        <div class="card-title" contenteditable="true" id="titlePkg">PKG WASTES (KG/ACT.H)</div>
+                        <div class="card-title" contenteditable="true" id="titlePkg">PKG WASTES (kg/Act.h)</div>
                     </div>
                 </div>
                 <div class="card-content-area" id="pkgContainer">
@@ -748,7 +852,7 @@
                 <div class="card-header">
                     <div class="card-header-left">
                         <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
-                        <div class="card-title" contenteditable="true" id="titleLiquid">IND. LIQUID CONS. (L/ACT.H)</div>
+                        <div class="card-title" contenteditable="true" id="titleLiquid">IND. LIQUID CONS. (L/act.h)</div>
                     </div>
                 </div>
                 <div class="card-content-area" id="liquidContainer">
@@ -762,7 +866,7 @@
                 <div class="card-header">
                     <div class="card-header-left">
                         <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
-                        <div class="card-title" contenteditable="true" id="titleWater">CUMUL WATER CONS. (M3/TAJ)</div>
+                        <div class="card-title" contenteditable="true" id="titleWater">CUMUL WATER CONS. (m3/TAJ)</div>
                     </div>
                 </div>
                 <div class="card-content-area" id="waterContainer">
@@ -777,6 +881,7 @@
     </div>
 
     <script>
+        // Kaydedilmiş veri kontrolü
         const saved = window.__SAVED_CHART_DATA__ || {};
 
         const settingsBtn = document.getElementById('settingsBtn');
@@ -812,7 +917,7 @@
 
         let cevreChart = new Chart(document.getElementById('cevreEgitimChart'), { 
             type: 'doughnut', 
-            data: { datasets: [{ data: saved.cevreScore || [90, 10], backgroundColor: ['#059669', '#f1f5f9'], borderWidth: 0 }] }, 
+            data: { datasets: [{ data: saved.cevreScore || [88, 12], backgroundColor: ['#059669', '#f1f5f9'], borderWidth: 0 }] }, 
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -850,7 +955,7 @@
                 datasets: [
                     {
                         label: 'Reel (kg/act.hour)',
-                        data: saved.legalChart ? saved.legalChart[0] : [91.4, 91.4, 91.4, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        data: saved.legalChart ? saved.legalChart[0] : [91.4, 91.4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                         backgroundColor: '#0f172a',
                         barPercentage: 0.5,
                         order: 2,
@@ -874,13 +979,13 @@
                 responsive: true, maintainAspectRatio: false,
                 layout: { padding: { top: 16, right: 0, left: 0, bottom: 0 } },
                 plugins: {
-                    legend: { display: true, position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, font: {size: 12, family: "'Poppins', sans-serif", weight: '600'}, color: Chart.defaults.color, padding: 12 } },
+                    legend: { display: true, position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, font: {size: 11, family: "'Poppins', sans-serif", weight: '600'}, color: Chart.defaults.color, padding: 8 } },
                     tooltip: { enabled: false }
                 },
                 scales: {
-                    y: { min: 0, max: 110, grid: { color: '#e2e8f0', drawBorder: false }, ticks: { color: '#0f172a', font: {size: 11, weight: '700'}, maxTicksLimit: 5 } },
-                    yRight: { min: 0, max: 110, position: 'right', grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 11, weight: '700'}, maxTicksLimit: 5 } },
-                    x: { grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 11, weight: '700'} } }
+                    y: { min: 0, max: 110, grid: { color: '#e2e8f0', drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'}, maxTicksLimit: 5 } },
+                    yRight: { min: 0, max: 110, position: 'right', grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'}, maxTicksLimit: 5 } },
+                    x: { grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'} } }
                 },
                 animation: { duration: 0 }
             }
@@ -914,7 +1019,7 @@
                                 
                                 if (dataset.label === 'MONTH BUDGET' || dataset.label === 'Budget (kg/act.hour)') {
                                     ctx.fillStyle = budgetColor; 
-                                    ctx.fillText(displayVal, element.x, element.y - 4);
+                                    ctx.fillText(displayVal, element.x, element.y - 3);
                                 } else if (dataset.label === '2025 RESULTS' || dataset.label === 'Reel (kg/act.hour)') {
                                     let isNOK = false;
                                     if (budgetDatasetIndex !== -1 && data.datasets[budgetDatasetIndex].data[index] !== null) {
@@ -924,10 +1029,10 @@
                                         }
                                     }
                                     ctx.fillStyle = isNOK ? nokColor : mainTextColor;
-                                    ctx.fillText(displayVal, element.x, element.y - 4);
+                                    ctx.fillText(displayVal, element.x, element.y - 3);
                                 } else {
                                     ctx.fillStyle = mainTextColor;
-                                    ctx.fillText(displayVal, element.x, element.y - 4);
+                                    ctx.fillText(displayVal, element.x, element.y - 3);
                                 }
                             }
                         });
@@ -949,7 +1054,7 @@
                         const value = dataset.data[index];
                         if (value > 0) {
                             ctx.fillStyle = '#ffffff';
-                            ctx.font = '700 11px Poppins';
+                            ctx.font = '600 10px Poppins';
                             ctx.textAlign = 'center';
                             ctx.textBaseline = 'middle';
                             const position = element.tooltipPosition();
@@ -965,9 +1070,9 @@
             data: {
                 labels: ['Wastes', 'Water', 'Oil Leaking', 'Chemical', 'Overflow of pools', '5S', 'Other'],
                 datasets: [{
-                    data: saved.nonconfPieChart || [17, 5, 18, 8, 2, 14, 16],
+                    data: saved.nonconfPieChart || [16, 5, 18, 8, 2, 14, 17],
                     backgroundColor: ['#5b9bd5', '#ed7d31', '#a5a5a5', '#ffc000', '#4472c4', '#70ad47', '#264478'],
-                    borderWidth: 1.5,
+                    borderWidth: 1,
                     borderColor: '#ffffff'
                 }]
             },
@@ -977,7 +1082,7 @@
                 plugins: {
                     legend: {
                         display: true, position: 'bottom',
-                        labels: { boxWidth: 10, boxHeight: 10, font: { size: 10, family: "'Poppins', sans-serif", weight: '600' }, color: Chart.defaults.color, padding: 8 }
+                        labels: { boxWidth: 8, boxHeight: 8, font: { size: 9, family: "'Poppins', sans-serif", weight: '600' }, color: Chart.defaults.color, padding: 6 }
                     },
                     tooltip: { enabled: false }
                 },
@@ -1001,13 +1106,13 @@
                     responsive: true, maintainAspectRatio: false,
                     layout: { padding: { top: 16, right: 0, left: 0, bottom: 0 } },
                     plugins: {
-                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, font: {size: 11, family: "'Poppins', sans-serif", weight: '600'}, color: Chart.defaults.color, padding: 10 } },
+                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, font: {size: 11, family: "'Poppins', sans-serif", weight: '600'}, color: Chart.defaults.color, padding: 8 } },
                         tooltip: { enabled: false }
                     },
                     scales: {
-                        y: { beginAtZero: true, max: maxVal, grid: { color: '#e2e8f0', drawBorder: false }, ticks: { color: '#0f172a', font: {size: 11, weight: '700'}, maxTicksLimit: 5 } },
-                        yRight: { beginAtZero: true, max: maxVal, position: 'right', grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 11, weight: '700'}, maxTicksLimit: 5 } },
-                        x: { grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 11, weight: '700'} } }
+                        y: { beginAtZero: true, max: maxVal, grid: { color: '#e2e8f0', drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'}, maxTicksLimit: 5 } },
+                        yRight: { beginAtZero: true, max: maxVal, position: 'right', grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'}, maxTicksLimit: 5 } },
+                        x: { grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'} } }
                     },
                     animation: { duration: 0 }
                 }
@@ -1015,25 +1120,25 @@
         }
 
         let dangChart = createComboChart('dangChart', 3.2, 
-            saved.dangChart ? saved.dangChart[0] : [1.04, 1.12, 1.48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            saved.dangChart ? saved.dangChart[0] : [1.04, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             saved.dangChart ? saved.dangChart[1] : [null, 2.70, 1.80, null, null, null, null, null, null, null, null, null, null],
             saved.dangChart ? saved.dangChart[2] : [null, 1.12, 1.01, 0.97, 0.85, 0.87, 0.79, 0.87, 1.01, 0.99, 0.99, 1.06, 1.11]
         );
 
         let liquidChart = createComboChart('liquidChart', 1.0, 
-            saved.liquidChart ? saved.liquidChart[0] : [0.57, 0.62, 0.69, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            saved.liquidChart ? saved.liquidChart[0] : [0.57, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             saved.liquidChart ? saved.liquidChart[1] : [null, 0.62, 0.63, null, null, null, null, null, null, null, null, null, null],
             saved.liquidChart ? saved.liquidChart[2] : [null, 0.74, 0.73, 0.73, 0.73, 0.72, 0.71, 0.71, 0.78, 0.69, 0.78, 0.78, 0.76]
         );
 
         let pkgChart = createComboChart('pkgChart', 3.5, 
-            saved.pkgChart ? saved.pkgChart[0] : [2.85, 1.75, 1.95, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            saved.pkgChart ? saved.pkgChart[0] : [2.85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             saved.pkgChart ? saved.pkgChart[1] : [null, 1.95, 2.41, null, null, null, null, null, null, null, null, null, null],
             saved.pkgChart ? saved.pkgChart[2] : [null, 1.75, 2.01, 1.95, 1.95, 2.01, 1.91, 1.84, 1.85, 1.84, 1.80, 1.77, 1.81]
         );
 
         let waterChart = createComboChart('waterChart', 0.8, 
-            saved.waterChart ? saved.waterChart[0] : [0.14, 0.13, 0.08, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            saved.waterChart ? saved.waterChart[0] : [0.14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             saved.waterChart ? saved.waterChart[1] : [null, 0.13, null, null, null, null, null, null, null, null, null, null, null],
             saved.waterChart ? saved.waterChart[2] : [null, 0.13, 0.11, 0.13, 0.16, 0.17, 0.18, 0.26, 0.64, 0.18, 0.15, 0.14, 0.15]
         );
@@ -1214,6 +1319,7 @@
             if (selectedCard) { const elements = selectedCard.querySelectorAll(selectorsMutedText); elements.forEach(el => el.style.color = e.target.value); }
         });
 
+        // AYARLAR BUTONUNU ÇALIŞTIRAN KOD
         settingsBtn.addEventListener('click', () => { colorTool.style.display = 'block'; });
         closeTool.addEventListener('click', () => { colorTool.style.display = 'none'; });
 
@@ -1251,6 +1357,7 @@
           appId: "1:859607408879:web:1f8e068725ca63c78ebb1a"
         };
 
+        // Initialize Firebase Compat
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         const DOC_PATH = "environmental_data_v1";

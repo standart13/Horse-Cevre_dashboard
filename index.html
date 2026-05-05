@@ -935,56 +935,60 @@
         });
 
         const customDataLabels = {
-            id: 'customDataLabels',
-            afterDatasetsDraw(chart, args, pluginOptions) {
-                if (chart.config.type === 'doughnut' || chart.config.type === 'pie') return;
-                const { ctx, data } = chart;
-                ctx.save();
-                
-                const fontSize = (chart.options.plugins && chart.options.plugins.customDataLabels && chart.options.plugins.customDataLabels.fontSize) || 10;
-                ctx.font = 'normal ' + fontSize + 'px Poppins'; 
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'bottom';
-                
-                const mainTextColor = getComputedStyle(root).getPropertyValue('--text-main').trim();
-                const budgetColor = '#059669'; 
-                const nokColor = '#dc2626';     
-                
-                let budgetDatasetIndex = data.datasets.findIndex(ds => ds.label === 'MONTH BUDGET' || ds.label === 'Budget (kg/act.hour)');
+    id: 'customDataLabels',
+    afterDatasetsDraw(chart, args, pluginOptions) {
+        if (chart.config.type === 'doughnut' || chart.config.type === 'pie') return;
+        const { ctx, data } = chart;
+        ctx.save();
+        
+        if (chart.canvas.id === 'legalChart') {
+            ctx.font = 'normal 10px Poppins';
+        } else {
+            ctx.font = 'normal 7px Poppins';
+        }
+        
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        
+        const mainTextColor = getComputedStyle(root).getPropertyValue('--text-main').trim();
+        const budgetColor = '#059669'; 
+        const nokColor = '#dc2626';     
+        
+        let budgetDatasetIndex = data.datasets.findIndex(ds => ds.label === 'MONTH BUDGET' || ds.label === 'Budget (kg/act.hour)');
 
-                data.datasets.forEach((dataset, i) => {
-                    const meta = chart.getDatasetMeta(i);
+        data.datasets.forEach((dataset, i) => {
+            const meta = chart.getDatasetMeta(i);
 
-                    if (!meta.hidden) {
-                        meta.data.forEach((element, index) => {
-                            const value = dataset.data[index];
-                            if (value !== null && value !== undefined && !isNaN(value) && value !== 0) {
-                                let displayVal = value.toString().replace('.', ',');
-                                
-                                if (dataset.label === 'MONTH BUDGET' || dataset.label === 'Budget (kg/act.hour)') {
-                                    ctx.fillStyle = budgetColor; 
-                                    ctx.fillText(displayVal, element.x, element.y - 3);
-                                } else if (dataset.label === '2025 RESULTS' || dataset.label === 'Reel (kg/act.hour)') {
-                                    let isNOK = false;
-                                    if (budgetDatasetIndex !== -1 && data.datasets[budgetDatasetIndex].data[index] !== null) {
-                                        const comparisonVal = data.datasets[budgetDatasetIndex].data[index];
-                                        if (value > comparisonVal) {
-                                            isNOK = true;
-                                        }
-                                    }
-                                    ctx.fillStyle = isNOK ? nokColor : mainTextColor;
-                                    ctx.fillText(displayVal, element.x, element.y - 3);
-                                } else {
-                                    ctx.fillStyle = mainTextColor;
-                                    ctx.fillText(displayVal, element.x, element.y - 3);
+            if (!meta.hidden) {
+                meta.data.forEach((element, index) => {
+                    const value = dataset.data[index];
+                    if (value !== null && value !== undefined && !isNaN(value) && value !== 0) {
+                        let displayVal = value.toString().replace('.', ',');
+                        
+                        if (dataset.label === 'MONTH BUDGET' || dataset.label === 'Budget (kg/act.hour)') {
+                            ctx.fillStyle = budgetColor; 
+                            ctx.fillText(displayVal, element.x, element.y - 3);
+                        } else if (dataset.label === '2026 TARGET' || dataset.label === 'Reel (kg/act.hour)') {
+                            let isNOK = false;
+                            if (budgetDatasetIndex !== -1 && data.datasets[budgetDatasetIndex].data[index] !== null) {
+                                const comparisonVal = data.datasets[budgetDatasetIndex].data[index];
+                                if (value > comparisonVal) {
+                                    isNOK = true;
                                 }
                             }
-                        });
+                            ctx.fillStyle = isNOK ? nokColor : mainTextColor;
+                            ctx.fillText(displayVal, element.x, element.y - 3);
+                        } else {
+                            ctx.fillStyle = mainTextColor;
+                            ctx.fillText(displayVal, element.x, element.y - 3);
+                        }
                     }
                 });
-                ctx.restore();
             }
-        };
+        });
+        ctx.restore();
+    }
+};
 
         Chart.register(customDataLabels);
 
@@ -1107,7 +1111,11 @@
             const x = evt.native ? evt.native.offsetX : evt.offsetX;
             pIndex = chartInstance.scales.x.getValueForPixel(x);
             if (pIndex !== undefined && pIndex >= 0 && pIndex < chartInstance.data.labels.length) {
-                dIndex = 0; 
+                if (chartInstance.canvas.id === 'legalChart') {
+                    dIndex = 0;
+                } else {
+                    dIndex = 1; 
+                }
             }
         }
 

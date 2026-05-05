@@ -133,6 +133,25 @@
             flex-shrink: 0;
         }
 
+        .bottom-section .card {
+            padding: 6px 8px;
+        }
+        .bottom-section .card-header {
+            margin-bottom: 0;
+            gap: 6px;
+        }
+        .bottom-section .card-icon {
+            font-size: 14px;
+            min-width: 18px;
+        }
+        .bottom-section .card-title {
+            font-size: 10px;
+            letter-spacing: 0.3px;
+        }
+        .bottom-section .chart-container-large {
+            margin-top: 0 !important;
+        }
+
         .card {
             background-color: var(--card-bg);
             border: var(--card-border-width) solid var(--border-color);
@@ -922,7 +941,8 @@
                 const { ctx, data } = chart;
                 ctx.save();
                 
-                ctx.font = 'normal 10px Poppins'; 
+                const fontSize = (chart.options.plugins && chart.options.plugins.customDataLabels && chart.options.plugins.customDataLabels.fontSize) || 10;
+                ctx.font = 'normal ' + fontSize + 'px Poppins'; 
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'bottom';
                 
@@ -1028,15 +1048,16 @@
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    layout: { padding: { top: 16, right: 0, left: 0, bottom: 0 } },
+                    layout: { padding: { top: 10, right: 0, left: 0, bottom: 0 } },
                     plugins: {
-                        legend: { display: true, position: 'bottom', labels: { boxWidth: 10, boxHeight: 10, font: {size: 11, family: "'Poppins', sans-serif", weight: '600'}, color: Chart.defaults.color, padding: 8 } },
-                        tooltip: { enabled: false }
+                        legend: { display: true, position: 'bottom', labels: { boxWidth: 8, boxHeight: 8, font: {size: 8, family: "'Poppins', sans-serif", weight: '600'}, color: Chart.defaults.color, padding: 3 } },
+                        tooltip: { enabled: false },
+                        customDataLabels: { fontSize: 8 }
                     },
                     scales: {
-                        y: { beginAtZero: true, max: maxVal, grid: { color: '#e2e8f0', drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'}, maxTicksLimit: 5 } },
-                        yRight: { beginAtZero: true, max: maxVal, position: 'right', grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'}, maxTicksLimit: 5 } },
-                        x: { grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 10, weight: '700'} } }
+                        y: { beginAtZero: true, max: maxVal, grid: { color: '#e2e8f0', drawBorder: false }, ticks: { color: '#0f172a', font: {size: 8, weight: '700'}, maxTicksLimit: 5 } },
+                        yRight: { beginAtZero: true, max: maxVal, position: 'right', grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 8, weight: '700'}, maxTicksLimit: 5 } },
+                        x: { grid: { display: false, drawBorder: false }, ticks: { color: '#0f172a', font: {size: 8, weight: '700'} } }
                     },
                     animation: { duration: 0 }
                 }

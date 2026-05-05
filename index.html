@@ -548,275 +548,199 @@
     </div>
 
     <div class="dashboard-layout">
-        <div class="top-section">
-            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
-                <div style="display: flex; gap: 12px; flex-shrink: 0;">
-                    <div class="card card-egitim" style="flex: 1 1 0%; outline: none;">
-                        <div class="card-header">
-                            <div class="card-header-left">
-                                <div class="card-icon"><i class="fa-solid fa-person-chalkboard"></i></div>
-                                <div class="card-title" contenteditable="true" id="titleEgitim">ÇEVRE EĞİTİMLERİ</div>
-                            </div>
-                        </div>
-                        <div class="card-content-area">
-                            <div class="chart-wrapper-row">
-                                <div style="pointer-events: auto;">
-                                    <div class="metric-large" id="cevreScore" contenteditable="true">88%</div>
-                                    <div class="metric-sub" contenteditable="true" id="cevreLabel">Tamamlanma Oranı</div>
-                                </div>
-                                <div class="chart-container"><canvas id="cevreEgitimChart"></canvas></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card card-denetim" style="flex: 1 1 0%; outline: none;">
-                        <div class="card-header">
-                            <div class="card-header-left">
-                                <div class="card-icon"><i class="fa-solid fa-trash-can-arrow-up"></i></div>
-                                <div class="card-title" contenteditable="true" id="titleDenetim">GÖRSEL ATIK KABI DENETİMLERİ</div>
-                            </div>
-                        </div>
-                        <div class="card-content-area">
-                            <div>
-                                <div class="fraction-val">
-                                    <span class="fraction-current" id="atikCurrent" contenteditable="true">12</span>
-                                    <span class="fraction-divider">/</span>
-                                    <span class="fraction-total" id="atikTotal" contenteditable="true">15</span>
-                                </div>
-                                <div class="metric-sub" contenteditable="true" id="atikLabel">Tamamlanan Denetimler</div>
-                                <div class="progress-bar-bg">
-                                    <div id="atikBar" class="progress-bar-fill" style="width: 80%;"></div>
-                                </div>
-                            </div>
-                        </div>
+       <div class="top-section" style="display: grid; grid-template-columns: 1.35fr 1fr 1.4fr; gap: 12px; flex: 1; min-height: 0;">
+    
+    <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+        <div style="display: flex; gap: 12px; flex-shrink: 0;">
+            <div class="card card-egitim" style="flex: 1 1 0%; outline: none;">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <div class="card-icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+                        <div class="card-title" contenteditable="true" id="titleEgitim">ÇEVRE EĞİTİMLERİ</div>
                     </div>
                 </div>
-
-                <div class="card card-kpi" style="flex-grow: 1; min-height: 0px; outline: none;">
-                    <div class="card-header">
-                        <div class="card-header-left">
-                            <div class="card-icon"><i class="fa-solid fa-table-list"></i></div>
-                            <div class="card-title" contenteditable="true" id="titleKpi">AYLIK ÇEVRE KPI ÖZETİ ŞUBAT</div>
+                <div class="card-content-area">
+                    <div class="chart-wrapper-row">
+                        <div style="pointer-events: auto;">
+                            <div class="metric-large" id="cevreScore" contenteditable="true">88%</div>
+                            <div class="metric-sub" contenteditable="true" id="cevreLabel">Tamamlanma Oranı</div>
                         </div>
-                    </div>
-                    <div class="card-content-area" style="justify-content: flex-start; align-items: stretch;">
-                        <table class="kpi-table" style="height: 100%;">
-                            <thead>
-                                <tr>
-                                    <th contenteditable="true" class="text-left" style="width: 30%;">Kategori</th>
-                                    <th contenteditable="true" class="text-left" style="width: 50%;">KPI</th>
-                                    <th contenteditable="true" style="width: 20%; text-align: center;">Gerçekleşen / Hedef</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td contenteditable="true" class="text-left" id="kpiKat1">⚡ Enerji</td>
-                                    <td contenteditable="true" class="text-left" id="kpiMet1">Elektrik Tüketimi</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum1">100/86</td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" class="text-left" id="kpiKat2">🔥 Enerji</td>
-                                    <td contenteditable="true" class="text-left" id="kpiMet2">Doğalgaz Tüketimi</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum2">43/45</td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" class="text-left" id="kpiKat3">💧 Su</td>
-                                    <td contenteditable="true" class="text-left" id="kpiMet3">Su Tüketimi</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum3">0.1/0.13</td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" class="text-left" id="kpiKat4">🌍 Emisyon</td>
-                                    <td contenteditable="true" class="text-left" id="kpiMet4">Sera Gazı</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum4">9/9</td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" class="text-left" id="kpiKat5">♻ Atık</td>
-                                    <td contenteditable="true" class="text-left" id="kpiMet5">Ambalaj Atığı</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum5">2.41/1.95</td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" class="text-left" id="kpiKat6">☠ Atık</td>
-                                    <td contenteditable="true" class="text-left" id="kpiMet6">Tehlikeli Atık</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum6">1.8/1.12</td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" class="text-left" id="kpiKat7">🛢 End. Sıvı</td>
-                                    <td contenteditable="true" class="text-left" id="kpiMet7">End. Sıvı Tüketimi</td>
-                                    <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum7">0.63/0.73</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="chart-container"><canvas id="cevreEgitimChart"></canvas></div>
                     </div>
                 </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
-                
-                <div class="card card-dogal" style="flex-shrink: 0; outline: none;">
-                    <div class="card-header">
-                        <div class="card-header-left">
-                            <div class="card-icon"><i class="fa-solid fa-leaf"></i></div>
-                            <div class="card-title" contenteditable="true" id="titleDogal">Yönetim sistemi PERFORMANS DEĞERLENDİRMESİ</div>
-                        </div>
-                    </div>
-                    <div class="card-content-area" style="justify-content: center; align-items: center; padding-top: 4px; min-height: 48px;">
-                        <div id="dogalScore" contenteditable="true" style="font-size: 28px; font-weight: 800; line-height: 1; color: var(--text-main); text-align: center; width: 100%; pointer-events: auto;"><br></div>
-                        <div class="metric-sub" id="dogalLabel" style="display: none;"></div>
+            <div class="card card-denetim" style="flex: 1 1 0%; outline: none;">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <div class="card-icon"><i class="fa-solid fa-trash-can-arrow-up"></i></div>
+                        <div class="card-title" contenteditable="true" id="titleDenetim">GÖRSEL ATIK KABI DENETİMLERİ</div>
                     </div>
                 </div>
-
-                <div class="card card-nonconf" style="flex-grow: 1; outline: none;">
-                    <div class="card-header">
-                        <div class="card-header-left">
-                            <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                            <div class="card-title" contenteditable="true" id="titleNonconf">NON-CONFORMITIES AND CORRECTIVE ACTIONS</div>
+                <div class="card-content-area">
+                    <div>
+                        <div class="fraction-val">
+                            <span class="fraction-current" id="atikCurrent" contenteditable="true">12</span>
+                            <span class="fraction-divider">/</span>
+                            <span class="fraction-total" id="atikTotal" contenteditable="true">15</span>
                         </div>
-                    </div>
-                    <div class="card-content-area" style="padding-top: 4px; display: flex; flex-direction: column; height: 100%; min-height: 0;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; flex-shrink: 0; padding: 0 4px; pointer-events: auto;">
-                            <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Top: <span id="ncTotal" contenteditable="true">143</span></div>
-                            <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Açık: <span id="ncOpen" contenteditable="true" style="color: var(--accent-red);">43</span></div>
-                            <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Kapatıldı: <span id="ncClosed" contenteditable="true" style="color: var(--accent-green);">100</span></div>
-                        </div>
-                        <div style="flex-grow: 1; position: relative; min-height: 0; width: 100%; pointer-events: auto;">
-                            <canvas id="nonconfPieChart"></canvas>
+                        <div class="metric-sub" contenteditable="true" id="atikLabel">Tamamlanan Denetimler</div>
+                        <div class="progress-bar-bg">
+                            <div id="atikBar" class="progress-bar-fill" style="width: 80%;"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
-                <div class="card card-tatbikat" style="flex-grow: 1; min-height: 0px; outline: none;">
-                    <div class="card-header">
-                        <div class="card-header-left">
-                            <div class="card-icon"><i class="fa-solid fa-person-running"></i></div>
-                            <div class="card-title" contenteditable="true" id="titleTatbikat">ÇEVRE TATBİKATLARI</div>
-                        </div>
-                    </div>
-                    <div class="card-content-area" style="flex-direction: row; gap: 12px; align-items: stretch; height: 100%;">
-                        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; min-width: 0;">
-                            <div class="sub-section-title" contenteditable="true" id="tatbikatTip1">KİMYASAL DÖKÜLME TATBİKATLARI</div>
-                            <div class="info-row">
-                                <span class="info-label" contenteditable="true">Planlanan:</span>
-                                <span class="info-val" id="tatbikatKimPlan" contenteditable="true">4 ADET</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label" contenteditable="true">Gerçekleşen:</span>
-                                <span class="info-val" id="tatbikatKimGerc" contenteditable="true" style="color: var(--accent-green);">3 ADET</span>
-                            </div>
-                            <div class="sub-section-title" contenteditable="true" style="margin-top: 8px;" id="tatbikatTip2">ADR TATBİKATLARI</div>
-                            <div class="info-row">
-                                <span class="info-label" contenteditable="true">Planlanan:</span>
-                                <span class="info-val" id="tatbikatAdrPlan" contenteditable="true">2 ADET</span>
-                            </div>
-                            <div class="info-row">
-                                <span class="info-label" contenteditable="true">Gerçekleşen:</span>
-                                <span class="info-val" id="tatbikatAdrGerc" contenteditable="true" style="color: var(--accent-green);">2 ADET</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card card-remark" style="flex-shrink: 0; outline: none;">
-                    <div class="card-header">
-                        <div class="card-header-left">
-                            <div class="card-icon"><i class="fa-solid fa-clipboard-check"></i></div>
-                            <div class="card-title" contenteditable="true" id="titleRemark">DENETİM REMARK SAYILARI</div>
-                        </div>
-                    </div>
-                    <div class="card-content-area" style="justify-content: flex-start;">
-                        <table class="kpi-table">
-                            <thead>
-                                <tr>
-                                    <th contenteditable="true" class="text-left" style="width: 50%;">Denetim Tipi</th>
-                                    <th contenteditable="true" style="width: 25%; text-align: center;">Hafta</th>
-                                    <th contenteditable="true" style="width: 25%; text-align: center;">Rmk</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td contenteditable="true" class="text-left" id="rmkTip1">DQS</td>
-                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta1">2</td>
-                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi1">«0»</td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" class="text-left" id="rmkTip2">Horse Global Evaluation</td>
-                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta2">20</td>
-                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi2">«0»</td>
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true" class="text-left" id="rmkTip3">Bureau Veritas</td>
-                                    <td contenteditable="true" style="text-align: center;" id="rmkHafta3">27</td>
-                                    <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi3">«0»</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
-                <div class="legal-card-wrapper">
-                    <div class="card" style="width: 100%; outline: none;">
-                        <div class="card-header">
-                            <div class="card-header-left">
-                                <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
-                                <div class="card-title" contenteditable="true" id="titleLegal">LEGAL &amp; REGULATORY ENVIRONMENTAL COMPLIANCE</div>
-                            </div>
-                        </div>
-                        <div class="card-content-area" id="legalContainer">
-                            <div class="chart-container-large" style="margin-top: 0;">
-                                <canvas id="legalChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="water-plan-wrapper">
-                    <div class="card" style="width: 100%; outline: none;">
-                        <div class="card-header">
-                            <div class="card-header-left">
-                                <div class="card-icon"><i class="fa-solid fa-droplet"></i></div>
-                                <div class="card-title" contenteditable="true" id="titleWaterAction">WATER ACTION PLAN</div>
-                            </div>
-                        </div>
-                        <div class="card-content-area" style="justify-content: flex-start;">
-                            <table class="water-table">
-                                <thead>
-                                    <tr>
-                                        <th contenteditable="true" style="width: 50%;">Aksiyon</th>
-                                        <th contenteditable="true" style="width: 15%; text-align: center;">Hedef m3/Yıl</th>
-                                        <th contenteditable="true" style="width: 15%; text-align: center;">Gerçek.</th>
-                                        <th contenteditable="true" style="width: 20%; text-align: center;">Durum</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td contenteditable="true" id="waterAks1">Kaçak Giderimi Dijital Takip</td>
-                                        <td contenteditable="true" style="text-align: center;" id="waterHed1">1000</td>
-                                        <td contenteditable="true" style="text-align: center;" id="waterGer1">850</td>
-                                        <td contenteditable="true" id="waterDur1" style="color:var(--vurgu-color); font-weight:800; text-align: center; font-size: 11px;">DEVAM EDİYOR</td>
-                                    </tr>
-                                    <tr>
-                                        <td contenteditable="true" id="waterAks2">Yağmur Hasadı Tankı Kurulumu</td>
-                                        <td contenteditable="true" style="text-align: center;" id="waterHed2"><br></td>
-                                        <td contenteditable="true" style="text-align: center;" id="waterGer2">0</td>
-                                        <td contenteditable="true" id="waterDur2" class="status-plan" style="text-align: center; font-size: 11px;">PLANLANDI</td>
-                                    </tr>
-                                    <tr>
-                                        <td contenteditable="true" id="waterAks3">Departman Sayaç Optimizasyonu</td>
-                                        <td contenteditable="true" style="text-align: center;" id="waterHed3">-</td>
-                                        <td contenteditable="true" style="text-align: center;" id="waterGer3">-</td>
-                                        <td contenteditable="true" id="waterDur3" class="status-ok" style="text-align: center; font-size: 11px;">PLANLANDI</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <div class="card card-kpi" style="flex-grow: 1; min-height: 0px; outline: none;">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <div class="card-icon"><i class="fa-solid fa-table-list"></i></div>
+                    <div class="card-title" contenteditable="true" id="titleKpi">AYLIK ÇEVRE KPI ÖZETİ ŞUBAT</div>
+                </div>
+            </div>
+            <div class="card-content-area" style="justify-content: flex-start; align-items: stretch;">
+                <table class="kpi-table" style="height: 100%;">
+                    <thead>
+                        <tr>
+                            <th contenteditable="true" class="text-left" style="width: 30%;">Kategori</th>
+                            <th contenteditable="true" class="text-left" style="width: 50%;">KPI</th>
+                            <th contenteditable="true" style="width: 20%; text-align: center;">Gerçekleşen / Hedef</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td contenteditable="true" class="text-left" id="kpiKat1">⚡ Enerji</td>
+                            <td contenteditable="true" class="text-left" id="kpiMet1">Elektrik Tüketimi</td>
+                            <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum1">100/86</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" class="text-left" id="kpiKat2">🔥 Enerji</td>
+                            <td contenteditable="true" class="text-left" id="kpiMet2">Doğalgaz Tüketimi</td>
+                            <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum2">43/45</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" class="text-left" id="kpiKat3">💧 Su</td>
+                            <td contenteditable="true" class="text-left" id="kpiMet3">Su Tüketimi</td>
+                            <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum3">0.1/0.13</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" class="text-left" id="kpiKat4">🌍 Emisyon</td>
+                            <td contenteditable="true" class="text-left" id="kpiMet4">Sera Gazı</td>
+                            <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum4">9/9</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" class="text-left" id="kpiKat5">♻ Atık</td>
+                            <td contenteditable="true" class="text-left" id="kpiMet5">Ambalaj Atığı</td>
+                            <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum5">2.41/1.95</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" class="text-left" id="kpiKat6">☠ Atık</td>
+                            <td contenteditable="true" class="text-left" id="kpiMet6">Tehlikeli Atık</td>
+                            <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-red);" id="kpiDurum6">1.8/1.12</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" class="text-left" id="kpiKat7">🛢 End. Sıvı</td>
+                            <td contenteditable="true" class="text-left" id="kpiMet7">End. Sıvı Tüketimi</td>
+                            <td contenteditable="true" class="kpi-ratio" style="text-align: center; font-weight: 800; color: var(--accent-green);" id="kpiDurum7">0.63/0.73</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+        <div class="card card-dogal" style="flex-shrink: 0; outline: none;">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <div class="card-icon"><i class="fa-solid fa-leaf"></i></div>
+                    <div class="card-title" contenteditable="true" id="titleDogal">Yönetim sistemi PERFORMANS DEĞERLENDİRMESİ</div>
+                </div>
+            </div>
+            <div class="card-content-area" style="justify-content: center; align-items: center; padding-top: 4px; min-height: 48px;">
+                <div id="dogalScore" contenteditable="true" style="font-size: 28px; font-weight: 800; line-height: 1; color: var(--text-main); text-align: center; width: 100%; pointer-events: auto;"><br></div>
+                <div class="metric-sub" id="dogalLabel" style="display: none;"></div>
+            </div>
+        </div>
+
+        <div class="card card-nonconf" style="flex-grow: 1; outline: none;">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div class="card-title" contenteditable="true" id="titleNonconf">NON-CONFORMITIES AND CORRECTIVE ACTIONS</div>
+                </div>
+            </div>
+            <div class="card-content-area" style="padding-top: 4px; display: flex; flex-direction: column; height: 100%; min-height: 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; flex-shrink: 0; padding: 0 4px; pointer-events: auto;">
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Top: <span id="ncTotal" contenteditable="true">143</span></div>
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Açık: <span id="ncOpen" contenteditable="true" style="color: var(--accent-red);">43</span></div>
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">Kapatıldı: <span id="ncClosed" contenteditable="true" style="color: var(--accent-green);">100</span></div>
+                </div>
+                <div style="flex-grow: 1; position: relative; min-height: 0; width: 100%; pointer-events: auto;">
+                    <canvas id="nonconfPieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px; min-height: 0;">
+        <div class="card card-remark" style="flex-shrink: 0; outline: none;">
+            <div class="card-header">
+                <div class="card-header-left">
+                    <div class="card-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                    <div class="card-title" contenteditable="true" id="titleRemark">DENETİM REMARK SAYILARI</div>
+                </div>
+            </div>
+            <div class="card-content-area" style="justify-content: flex-start;">
+                <table class="kpi-table">
+                    <thead>
+                        <tr>
+                            <th contenteditable="true" class="text-left" style="width: 50%;">Denetim Tipi</th>
+                            <th contenteditable="true" style="width: 25%; text-align: center;">Hafta</th>
+                            <th contenteditable="true" style="width: 25%; text-align: center;">Rmk</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td contenteditable="true" class="text-left" id="rmkTip1">DQS</td>
+                            <td contenteditable="true" style="text-align: center;" id="rmkHafta1">2</td>
+                            <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi1">«0»</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" class="text-left" id="rmkTip2">Horse Global Evaluation</td>
+                            <td contenteditable="true" style="text-align: center;" id="rmkHafta2">20</td>
+                            <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi2">«0»</td>
+                        </tr>
+                        <tr>
+                            <td contenteditable="true" class="text-left" id="rmkTip3">Bureau Veritas</td>
+                            <td contenteditable="true" style="text-align: center;" id="rmkHafta3">27</td>
+                            <td contenteditable="true" style="text-align: center; color: var(--vurgu-color); font-weight: bold;" id="rmkSayi3">«0»</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="legal-card-wrapper" style="flex-grow: 1; display: flex; min-height: 0;">
+            <div class="card" style="width: 100%; height: 100%; display: flex; flex-direction: column; outline: none;">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <div class="card-title" contenteditable="true" id="titleLegal">LEGAL &amp; REGULATORY ENVIRONMENTAL COMPLIANCE</div>
+                    </div>
+                </div>
+                <div class="card-content-area" id="legalContainer" style="flex-grow: 1; display: flex; flex-direction: column;">
+                    <div class="chart-container-large" style="margin-top: 0; flex-grow: 1; position: relative;">
+                        <canvas id="legalChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
         <div class="bottom-section">
             
@@ -1149,62 +1073,69 @@
         let editDataIndex = -1;
 
         function attachClickToChart(chartInstance, containerId) {
-            document.getElementById(chartInstance.canvas.id).addEventListener('click', function(evt) {
-                let points = chartInstance.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
-                let dIndex = -1;
-                let pIndex = -1;
-                
-                if (points.length) {
-                    dIndex = points[0].datasetIndex;
-                    pIndex = points[0].index;
-                } else {
-                    const canvasPosition = Chart.helpers.getRelativePosition(evt, chartInstance);
-                    const x = evt.native ? evt.native.offsetX : evt.offsetX;
-                    pIndex = chartInstance.scales.x.getValueForPixel(x);
-                    if (pIndex !== undefined && pIndex >= 0 && pIndex < chartInstance.data.labels.length) {
-                        dIndex = 0; 
-                    }
-                }
-
-                if (dIndex !== -1 && pIndex !== -1) {
-                    activeChart = chartInstance;
-                    editDatasetIndex = dIndex;
-                    editDataIndex = pIndex;
-                    
-                    const canvasRect = this.getBoundingClientRect();
-                    
-                    let elementX = 0;
-                    let elementY = 0;
-
-                    const meta = chartInstance.getDatasetMeta(dIndex);
-                    if (meta.data && meta.data[pIndex]) {
-                        elementX = meta.data[pIndex].x;
-                        elementY = meta.data[pIndex].y;
-                    } else {
-                        elementX = chartInstance.scales.x.getPixelForValue(pIndex);
-                        elementY = chartInstance.chartArea.bottom;
-                    }
-
-                    const absoluteX = window.scrollX + canvasRect.left + elementX;
-                    const absoluteY = window.scrollY + canvasRect.top + elementY;
-
-                    floatInput.style.display = 'block';
-                    document.body.appendChild(floatInput);
-                    floatInput.style.left = (absoluteX - 20) + 'px';
-                    floatInput.style.top = (absoluteY - 20) + 'px';
-                    
-                    const value = chartInstance.data.datasets[dIndex].data[pIndex];
-                    floatInput.value = (value !== null && value !== undefined && value !== 0) ? value : '';
-                    floatInput.focus();
-                }
-            });
+    document.getElementById(chartInstance.canvas.id).addEventListener('click', function(evt) {
+        let points = chartInstance.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        let dIndex = -1;
+        let pIndex = -1;
+        
+        if (points.length) {
+            dIndex = points[0].datasetIndex;
+            pIndex = points[0].index;
+        } else if (chartInstance.scales && chartInstance.scales.x) {
+            const canvasPosition = Chart.helpers.getRelativePosition(evt, chartInstance);
+            const x = evt.native ? evt.native.offsetX : evt.offsetX;
+            pIndex = chartInstance.scales.x.getValueForPixel(x);
+            if (pIndex !== undefined && pIndex >= 0 && pIndex < chartInstance.data.labels.length) {
+                dIndex = 0; 
+            }
         }
 
+        if (dIndex !== -1 && pIndex !== -1) {
+            activeChart = chartInstance;
+            editDatasetIndex = dIndex;
+            editDataIndex = pIndex;
+            
+            const canvasRect = this.getBoundingClientRect();
+            
+            let elementX = 0;
+            let elementY = 0;
+
+            const meta = chartInstance.getDatasetMeta(dIndex);
+            if (meta.data && meta.data[pIndex]) {
+                if (chartInstance.config.type === 'pie' || chartInstance.config.type === 'doughnut') {
+                    const pos = meta.data[pIndex].tooltipPosition();
+                    elementX = pos.x;
+                    elementY = pos.y;
+                } else {
+                    elementX = meta.data[pIndex].x;
+                    elementY = meta.data[pIndex].y;
+                }
+            } else if (chartInstance.scales && chartInstance.scales.x) {
+                elementX = chartInstance.scales.x.getPixelForValue(pIndex);
+                elementY = chartInstance.chartArea.bottom;
+            }
+
+            const absoluteX = window.scrollX + canvasRect.left + elementX;
+            const absoluteY = window.scrollY + canvasRect.top + elementY;
+
+            floatInput.style.display = 'block';
+            document.body.appendChild(floatInput);
+            floatInput.style.left = (absoluteX - 20) + 'px';
+            floatInput.style.top = (absoluteY - 20) + 'px';
+            
+            const value = chartInstance.data.datasets[dIndex].data[pIndex];
+            floatInput.value = (value !== null && value !== undefined && value !== 0) ? value : '';
+            floatInput.focus();
+        }
+    });
+}
+
         attachClickToChart(waterChart, 'waterContainer');
-        attachClickToChart(liquidChart, 'liquidContainer');
-        attachClickToChart(pkgChart, 'pkgContainer');
-        attachClickToChart(dangChart, 'dangContainer');
-        attachClickToChart(legalChart, 'legalContainer');
+attachClickToChart(liquidChart, 'liquidContainer');
+attachClickToChart(pkgChart, 'pkgContainer');
+attachClickToChart(dangChart, 'dangContainer');
+attachClickToChart(legalChart, 'legalContainer');
+attachClickToChart(nonconfPieChart, 'nonconfContainer');
 
         function updateChartPoint() {
             if (activeChart && editDatasetIndex !== -1 && editDataIndex !== -1) {

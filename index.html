@@ -416,6 +416,45 @@
             outline: none;
         }
 
+        .chart-note {
+            position: absolute;
+            top: 10px;
+            left: 70%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-main);
+            background: transparent;
+            padding: 1px 5px;
+            z-index: 5;
+            pointer-events: auto;
+            cursor: text;
+            outline: none;
+            text-align: center;
+            min-width: 60px;
+            min-height: 12px;
+            line-height: 1.25;
+            border-radius: 3px;
+            max-width: 100%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .chart-note:empty {
+            border: 1px dashed rgba(0,0,0,0.4);
+            background: rgba(255,255,255,0);
+            min-width: 80px;
+            min-height: 14px;
+        }
+        .chart-note:empty:before {
+            content: '';
+            color: rgba(0,0,0,0.0);
+            font-style: italic;
+        }
+        .legal-card-wrapper .chart-note {
+            font-size: 9px;
+            top: -7px;
+        }
+
         #colorTool {
             display: none;
             position: fixed;
@@ -753,6 +792,7 @@
                 <div class="card-content-area" id="legalContainer" style="flex-grow: 1; display: flex; flex-direction: column;">
                     <div class="chart-container-large" style="margin-top: 0; flex-grow: 1; position: relative;">
                         <canvas id="legalChart"></canvas>
+                        <div class="chart-note" contenteditable="true" id="legalNote"></div>
                     </div>
                 </div>
             </div>
@@ -773,6 +813,7 @@
                 <div class="card-content-area" id="dangContainer">
                     <div class="chart-container-large" style="margin-top: 0;">
                         <canvas id="dangChart"></canvas>
+                        <div class="chart-note" contenteditable="true" id="dangNote">Öngörülenden az TAJ</div>
                     </div>
                 </div>
             </div>
@@ -787,6 +828,7 @@
                 <div class="card-content-area" id="pkgContainer">
                     <div class="chart-container-large" style="margin-top: 0;">
                         <canvas id="pkgChart"></canvas>
+                        <div class="chart-note" contenteditable="true" id="pkgNote"></div>
                     </div>
                 </div>
             </div>
@@ -801,6 +843,7 @@
                 <div class="card-content-area" id="liquidContainer">
                     <div class="chart-container-large" style="margin-top: 0;">
                         <canvas id="liquidChart"></canvas>
+                        <div class="chart-note" contenteditable="true" id="liquidNote"></div>
                     </div>
                 </div>
             </div>
@@ -815,6 +858,7 @@
                 <div class="card-content-area" id="waterContainer">
                     <div class="chart-container-large" style="margin-top: 0;">
                         <canvas id="waterChart"></canvas>
+                        <div class="chart-note" contenteditable="true" id="waterNote">UF tank temizliği</div>
                     </div>
                 </div>
             </div>
